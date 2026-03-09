@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Efes Antik Kenti – Kapsamlı Tur Rehberi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #C8860A;
+      --gold-light: #F0C040;
+      --terracotta: #C1440E;
+      --sand: #F5E6C8;
+      --sand-dark: #E8D0A0;
+      --stone: #9E8B6E;
+      --dark: #1A1208;
+      --dark-mid: #2C1F0A;
+      --cream: #FDF6E8;
+      --sky: #7ABFD8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+      background: linear-gradient(180deg, rgba(26,18,8,0.95) 0%, rgba(26,18,8,0.7) 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(200,134,10,0.3);
+    }
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--sand);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    /* ── HERO ─────────────────────────────── */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ephesus_Celsus_Library_Fa%C3%A7ade.jpg/1280px-Ephesus_Celsus_Library_Fa%C3%A7ade.jpg') center/cover no-repeat;
+      filter: brightness(0.35) saturate(0.8);
+      transform: scale(1.05);
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(193,68,14,0.2) 0%,
+        rgba(26,18,8,0.4) 50%,
+        rgba(200,134,10,0.15) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+      animation: fadeUp 1.2s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 6px;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      animation: fadeUp 1.2s 0.2s ease both;
+    }
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900;
+      color: var(--sand);
+      line-height: 1.05;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 40px rgba(200,134,10,0.5);
+      animation: fadeUp 1.2s 0.4s ease both;
+    }
+    .hero-title span { color: var(--gold-light); }
+    .hero-tagline {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(245,230,200,0.8);
+      margin-bottom: 48px;
+      animation: fadeUp 1.2s 0.6s ease both;
+    }
+    .hero-cta {
+      display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 1.2s 0.8s ease both;
+    }
+    .btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 2px;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,134,10,0.4); }
+    .btn-outline {
+      background: transparent;
+      color: var(--sand);
+      border: 1px solid rgba(245,230,200,0.5);
+    }
+    .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: bounce 2s ease infinite;
+    }
+    .hero-scroll span {
+      font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 3px;
+      color: rgba(245,230,200,0.6); text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(200,134,10,0.8), transparent);
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* ── SECTIONS SHARED ─────────────────── */
+    section { padding: 100px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem; letter-spacing: 5px;
+      color: var(--terracotta);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--dark-mid);
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    .section-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #3D2B10;
+      max-width: 700px;
+    }
+    .gold-divider {
+      width: 64px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      margin: 20px 0 36px;
+      border-radius: 2px;
+    }
+
+    /* ── INTRO BAND ──────────────────────── */
+    .intro-band {
+      background: var(--dark-mid);
+      padding: 64px 0;
+    }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(200,134,10,0.2);
+    }
+    .intro-stat {
+      background: var(--dark-mid);
+      padding: 40px 32px;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .intro-stat:hover { background: rgba(200,134,10,0.08); }
+    .stat-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.8rem;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: rgba(245,230,200,0.6);
+      text-transform: uppercase;
+    }
+
+    /* ── ABOUT ───────────────────────────── */
+    .about { background: var(--cream); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%; height: 500px;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+    .about-img-accent {
+      position: absolute;
+      top: -16px; left: -16px;
+      width: 100%; height: 100%;
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -24px; right: -24px;
+      background: var(--terracotta);
+      color: var(--sand);
+      padding: 20px 24px;
+      text-align: center;
+      border-radius: 2px;
+    }
+    .badge-year {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.6rem;
+      display: block;
+    }
+    .badge-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* ── ROTA ────────────────────────────── */
+    .rota { background: linear-gradient(180deg, var(--sand) 0%, var(--cream) 100%); }
+    .rota-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 72px;
+    }
+    .rota-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(158,139,110,0.2);
+    }
+    .rota-step {
+      background: var(--sand);
+      padding: 28px 24px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .rota-step:hover {
+      background: var(--dark-mid);
+    }
+    .rota-step:hover .step-title,
+    .rota-step:hover .step-time { color: var(--gold-light); }
+    .rota-step:hover .step-num { color: var(--terracotta); }
+    .step-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2rem;
+      color: rgba(158,139,110,0.4);
+      display: block;
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+    .step-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-mid);
+      margin-bottom: 6px;
+      transition: color 0.3s;
+      letter-spacing: 0.5px;
+    }
+    .step-time {
+      font-family: 'Lora', serif;
+      font-size: 0.78rem;
+      color: var(--stone);
+      font-style: italic;
+      transition: color 0.3s;
+    }
+
+    /* ── SPOTS ───────────────────────────── */
+    .spots { background: var(--cream); }
+    .spots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 56px;
+    }
+    .spot-card {
+      background: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(26,18,8,0.08);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .spot-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(26,18,8,0.15); }
+    .spot-img {
+      width: 100%; height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .spot-img-placeholder {
+      width: 100%; height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+    .spot-body { padding: 28px; }
+    .spot-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 10px;
+    }
+    .spot-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .spot-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: #5A3F1A;
+    }
+    .spot-detail {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--sand-dark);
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ── FEATURE (CELSUS) ────────────────── */
+    .feature {
+      background: var(--dark);
+      overflow: hidden;
+      position: relative;
+    }
+    .feature-bg {
+      position: absolute; inset: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ephesus_Celsus_Library_Fa%C3%A7ade.jpg/1280px-Ephesus_Celsus_Library_Fa%C3%A7ade.jpg') center/cover no-repeat;
+      opacity: 0.12;
+    }
+    .feature-inner {
+      position: relative; z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .feature-text .section-title { color: var(--sand); }
+    .feature-text .section-body { color: rgba(245,230,200,0.75); }
+    .feature-text .section-label { color: var(--gold); }
+    .feature-quote {
+      border-left: 3px solid var(--gold);
+      padding-left: 28px;
+      margin-top: 32px;
+    }
+    .feature-quote p {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--sand);
+      line-height: 1.8;
+    }
+    .feature-quote cite {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-top: 12px;
+    }
+    .feature-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: rgba(200,134,10,0.2);
+    }
+    .feature-fact {
+      background: rgba(44,31,10,0.8);
+      padding: 32px 28px;
+      transition: background 0.3s;
+    }
+    .feature-fact:hover { background: rgba(200,134,10,0.12); }
+    .fact-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .fact-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .fact-text {
+      font-size: 0.9rem;
+      color: rgba(245,230,200,0.7);
+      line-height: 1.6;
+    }
+
+    /* ── CEVRESINDE ──────────────────────── */
+    .around { background: var(--sand); }
+    .around-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 56px;
+    }
+    .around-card {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 400px;
+      cursor: default;
+    }
+    .around-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s;
+    }
+    .around-card:hover img { transform: scale(1.08); }
+    .around-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,18,8,0.9) 0%, rgba(26,18,8,0.1) 60%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      transition: background 0.4s;
+    }
+    .around-card:hover .around-overlay {
+      background: linear-gradient(to top, rgba(26,18,8,0.95) 0%, rgba(26,18,8,0.2) 60%);
+    }
+    .around-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+    .around-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--sand);
+      margin-bottom: 10px;
+    }
+    .around-text {
+      font-size: 0.85rem;
+      color: rgba(245,230,200,0.7);
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s, opacity 0.4s;
+      opacity: 0;
+    }
+    .around-card:hover .around-text { max-height: 120px; opacity: 1; }
+
+    /* ── TIPS ────────────────────────────── */
+    .tips { background: var(--cream); }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 56px;
+    }
+    .tip-item {
+      display: flex;
+      gap: 24px;
+      padding: 32px;
+      background: var(--sand);
+      border-left: 3px solid var(--gold);
+      transition: transform 0.3s;
+    }
+    .tip-item:hover { transform: translateX(8px); }
+    .tip-icon { font-size: 2rem; flex-shrink: 0; }
+    .tip-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .tip-text { font-size: 0.9rem; line-height: 1.7; color: #5A3F1A; }
+
+    /* ── HRISTIYANLIK BANNER ─────────────── */
+    .christianity-band {
+      background: var(--terracotta);
+      padding: 72px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .christianity-band::before {
+      content: '✝';
+      position: absolute;
+      font-size: 20rem;
+      color: rgba(255,255,255,0.04);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .christianity-band .section-label { color: rgba(245,230,200,0.8); }
+    .christianity-band .section-title { color: var(--sand); }
+    .christianity-band .gold-divider { margin: 20px auto 36px; }
+    .christianity-band .section-body { color: rgba(245,230,200,0.85); margin: 0 auto; text-align: left; }
+    .seven-cities {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      margin-top: 40px;
+    }
+    .city-pill {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border: 1px solid rgba(245,230,200,0.4);
+      color: var(--sand);
+      border-radius: 100px;
+      transition: all 0.3s;
+    }
+    .city-pill:hover { background: rgba(245,230,200,0.15); border-color: var(--sand); }
+    .city-pill.active { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+
+    /* ── FOOTER ──────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 64px 0 32px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.8rem;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+    }
+    .footer-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: rgba(245,230,200,0.4);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .footer-divider {
+      width: 1px; height: 40px;
+      background: rgba(200,134,10,0.3);
+      margin: 0 auto 32px;
+    }
+    .footer-copy {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: rgba(245,230,200,0.25);
+      text-transform: uppercase;
+    }
+
+    /* ── SCROLL ANIMATIONS ───────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .container { padding: 0 24px; }
+      .about-grid,
+      .rota-intro,
+      .feature-inner { grid-template-columns: 1fr; gap: 40px; }
+      .intro-grid,
+      .rota-steps { grid-template-columns: repeat(2, 1fr); }
+      .spots-grid,
+      .around-grid,
+      .tips-grid { grid-template-columns: 1fr; }
+      .feature-facts { grid-template-columns: 1fr; }
+      .about-badge { bottom: -16px; right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">⚡ Efes</div>
+  <ul class="nav-links">
+    <li><a href="#hakkinda">Hakkında</a></li>
+    <li><a href="#rota">Rota</a></li>
+    <li><a href="#mekanlar">Mekanlar</a></li>
+    <li><a href="#cevre">Çevre</a></li>
+    <li><a href="#ipuclari">İpuçları</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-subtitle">🏛 UNESCO Dünya Mirası · Türkiye</p>
+    <h1 class="hero-title">Efes<br/><span>Antik Kenti</span></h1>
+    <p class="hero-tagline">Üst Kapıdan Tiyatroya — 3.000 Yıllık Tarihin İzinde</p>
+    <div class="hero-cta">
+      <a href="#rota" class="btn btn-primary">Rotayı Keşfet</a>
+      <a href="#hakkinda" class="btn btn-outline">Daha Fazla Öğren</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Kaydır</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="intro-band">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-stat reveal">
+        <span class="stat-num">250K</span>
+        <span class="stat-label">MS 1. Yüzyıl Nüfusu</span>
+      </div>
+      <div class="intro-stat reveal">
+        <span class="stat-num">3 km</span>
+        <span class="stat-label">Tur Yürüyüş Mesafesi</span>
+      </div>
+      <div class="intro-stat reveal">
+        <span class="stat-num">17</span>
+        <span class="stat-label">Dur-Anlat Noktası</span>
+      </div>
+      <div class="intro-stat reveal">
+        <span class="stat-num">%20</span>
+        <span class="stat-label">Bugüne Kadar Kazılan Alan</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="hakkinda">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ephesus_Celsus_Library_Fa%C3%A7ade.jpg/800px-Ephesus_Celsus_Library_Fa%C3%A7ade.jpg" alt="Celsus Kütüphanesi" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Ephesus_Curetes_Street.jpg/800px-Ephesus_Curetes_Street.jpg'"/>
+          <div class="about-img-accent"></div>
+          <div class="about-badge">
+            <span class="badge-year">MÖ 11.</span>
+            <span class="badge-text">Yüzyıldan Beri</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="section-label">Efes'i Anlamak</p>
+        <h2 class="section-title">Kuruluş Mantığı</h2>
+        <div class="gold-divider"></div>
+        <p class="section-body">
+          Efes'ten önce bu bölgede Hititler, Lelegler, Karlar ve daha pek çok medeniyet yaşadı. MÖ 11. yüzyılda İyonyalı Yunanlılar geldiğinde, şehri Küçük Menderes nehrinin ağzına, Sisam Adası'nın karşısına konumlandırdılar.
+        </p>
+        <br/>
+        <p class="section-body">
+          Antik dönemde bir şehrin nereye kurulacağını belirleyen dört temel unsur vardı: <strong>su, tarıma elverişli arazi, savunma ve ticaret yoluna yakınlık.</strong> MS 1. yüzyılda nüfusun 200.000–250.000 olduğu tahmin edilmektedir; Roma'nın İtalya dışındaki en büyük şehirlerinden biriydi.
+        </p>
+        <br/>
+        <p class="section-body">
+          Bugün Efes kalıntıları denizden yaklaşık <strong>8 kilometre içeridedir</strong>; Küçük Menderes'in taşıdığı alüvyon, antik limanı binlerce yıl boyunca yavaş yavaş kapattı.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROTA -->
+<section class="rota" id="rota">
+  <div class="container">
+    <div class="rota-intro">
+      <div class="reveal">
+        <p class="section-label">Tur Güzergahı</p>
+        <h2 class="section-title">Doğru Rota ile Eksiksiz Anlatım</h2>
+        <div class="gold-divider"></div>
+        <p class="section-body">
+          Efes turu üst kapıdan başlar ve tiyatroya doğru aşağı inerek tamamlanır. Bu rota hem fiziksel açıdan en konforlu hem de anlatım bütünlüğü açısından en mantıklı yolu sunar.
+        </p>
+        <br/>
+        <p class="section-body" style="font-style:italic; color:var(--stone);">
+          ⏱ Toplam yürüme mesafesi yaklaşık <strong>3 km</strong>; tavsiye edilen toplam süre <strong>3–3.5 saattir.</strong>
+        </p>
+      </div>
+      <div class="reveal" style="display:flex; align-items:center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Ephesus_Curetes_Street.jpg/800px-Ephesus_Curetes_Street.jpg" alt="Kuretenler Caddesi" style="width:100%;height:280px;object-fit:cover;border-radius:4px;"/>
+      </div>
+    </div>
+    <div class="rota-steps reveal">
+      <div class="rota-step"><span class="step-num">01</span><div class="step-title">Üst Kapı Girişi</div><div class="step-time">5–10 dk</div></div>
+      <div class="rota-step"><span class="step-num">02</span><div class="step-title">Gymnasium (Üç Kapılı Hamam)</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">03</span><div class="step-title">Devlet Agorası</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">04</span><div class="step-title">Bouleuterion (Parlamento)</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">05</span><div class="step-title">Prytaneion (Belediye)</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">06</span><div class="step-title">Domitianus Tapınağı</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">07</span><div class="step-title">Memmius Anıtı</div><div class="step-time">5 dk</div></div>
+      <div class="rota-step"><span class="step-num">08</span><div class="step-title">Nike Kabartması</div><div class="step-time">5 dk</div></div>
+      <div class="rota-step"><span class="step-num">09</span><div class="step-title">Herkül Kapısı</div><div class="step-time">5 dk</div></div>
+      <div class="rota-step"><span class="step-num">10</span><div class="step-title">Kuretenler Caddesi</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">11</span><div class="step-title">Trajan Çeşmesi</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">12</span><div class="step-title">Hadrian Tapınağı</div><div class="step-time">15 dk</div></div>
+      <div class="rota-step"><span class="step-num">13</span><div class="step-title">Terasevler (ayrı bilet)</div><div class="step-time">20–30 dk</div></div>
+      <div class="rota-step"><span class="step-num">14</span><div class="step-title">Celsus Kütüphanesi</div><div class="step-time">15 dk</div></div>
+      <div class="rota-step"><span class="step-num">15</span><div class="step-title">Ticari Agora</div><div class="step-time">10 dk</div></div>
+      <div class="rota-step"><span class="step-num">16</span><div class="step-title">Büyük Tiyatro</div><div class="step-time">15 dk</div></div>
+      <div class="rota-step"><span class="step-num">17</span><div class="step-title">Liman Caddesi</div><div class="step-time">10 dk</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTS -->
+<section class="spots" id="mekanlar">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Öne Çıkan Mekanlar</p>
+      <h2 class="section-title">Mutlaka Görülmesi Gerekenler</h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="spots-grid">
+
+      <div class="spot-card reveal">
+        <div class="spot-img-placeholder" style="background:linear-gradient(135deg,#C1440E22,#C8860A33);">🏛</div>
+        <div class="spot-body">
+          <div class="spot-tag">14. Durak · Kütüphane</div>
+          <div class="spot-title">Celsus Kütüphanesi</div>
+          <div class="spot-desc">MS 117'de inşa edilen antik dünyanın 3. büyük kütüphanesi. ~12.000 rulo eser barındırdığı tahmin edilir. MS 262'deki Gotlar yangınından sonra 1970'lerde Avusturyalı arkeologlar tarafından %80'i orijinal parçalarla restore edildi.</div>
+          <div class="spot-detail">✨ Celsus'un lahdi hâlâ zeminin altında</div>
+        </div>
+      </div>
+
+      <div class="spot-card reveal">
+        <div class="spot-img-placeholder" style="background:linear-gradient(135deg,#7ABFD822,#C8860A22);">🎭</div>
+        <div class="spot-body">
+          <div class="spot-tag">16. Durak · Tiyatro</div>
+          <div class="spot-title">Büyük Tiyatro</div>
+          <div class="spot-desc">25.000 kişi kapasiteli bu dev tiyatro, tepenin doğal eğimine oyulmuştur. Akustiği hâlâ mükemmeldir. Aziz Pavlus'a karşı başlatılan ünlü ayaklanma burada gerçekleşti.</div>
+          <div class="spot-detail">✨ Mikrofonsuz en üst sıraya kadar duyulur</div>
+        </div>
+      </div>
+
+      <div class="spot-card reveal">
+        <div class="spot-img-placeholder" style="background:linear-gradient(135deg,#9E8B6E22,#C1440E22);">🏠</div>
+        <div class="spot-body">
+          <div class="spot-tag">13. Durak · Konut</div>
+          <div class="spot-title">Terasevler</div>
+          <div class="spot-desc">MS 1–7. yüzyıllar arasında kesintisiz iskân görmüş bu yapılar antik dünyanın en iyi korunmuş konut alanlarından biridir. Pompei fresklerini aratmayan duvar resimleri ve mozaikler içerir.</div>
+          <div class="spot-detail">⚠ Ayrı bilet gerektirir · Kesinlikle değer</div>
+        </div>
+      </div>
+
+      <div class="spot-card reveal">
+        <div class="spot-img-placeholder" style="background:linear-gradient(135deg,#C8860A22,#9E8B6E33);">⛲</div>
+        <div class="spot-body">
+          <div class="spot-tag">11. Durak · Anıt</div>
+          <div class="spot-title">Trajan Çeşmesi</div>
+          <div class="spot-desc">MS 102–104'te İmparator Traianus'a adanmış bu anıtsal çeşme, iki katlı cephesi ve Korint başlıklı sütunlarıyla döneminin en etkileyici mimarilerinden biridir. Saatte 1.000 litre su taşıyordu.</div>
+          <div class="spot-detail">✨ Geriye kalan ayaklar bile yetişkin boyunda</div>
+        </div>
+      </div>
+
+      <div class="spot-card reveal">
+        <div class="spot-img-placeholder" style="background:linear-gradient(135deg,#C1440E11,#7ABFD833);">🦸</div>
+        <div class="spot-body">
+          <div class="spot-tag">12. Durak · Tapınak</div>
+          <div class="spot-title">Hadrian Tapınağı</div>
+          <div class="spot-desc">MS 117–138 yılları arasında inşa edilen bu tapınak Efes'in en zarif ve en iyi korunmuş yapılarından biridir. Giriş kemerinde Tyche (şehir koruyucusu), iç kemerde Medusa başı yer alır.</div>
+          <div class="spot-detail">✨ Antik dünyanın nazar boncuğu: Medusa</div>
+        </div>
+      </div>
+
+      <div class="spot-card reveal">
+        <div class="spot-img-placeholder" style="background:linear-gradient(135deg,#9E8B6E33,#C8860A22);">🛣</div>
+        <div class="spot-body">
+          <div class="spot-tag">17. Durak · Cadde</div>
+          <div class="spot-title">Liman Caddesi (Arcadiane)</div>
+          <div class="spot-desc">530 metre uzunluğunda, tamamen mermer kaplı bu cadde antik dönemde geceleri aydınlatılırdı. Buradan geçenler arasında İmparator Hadrianus ve Aziz Pavlus da bulunur.</div>
+          <div class="spot-detail">✨ Efes'in yalnızca %20'si kazıldı</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE – CELSUS -->
+<section class="feature">
+  <div class="feature-bg"></div>
+  <div class="container">
+    <div class="feature-inner">
+      <div class="feature-text reveal">
+        <p class="section-label">Bouleuterion</p>
+        <h2 class="section-title">Antik Dünyanın Parlamentosu</h2>
+        <div class="gold-divider"></div>
+        <p class="section-body">
+          MÖ 3. yüzyıla tarihlenen Bouleuterion yaklaşık 300–350 kişi kapasiteliydi ve tamamen kapalıydı. Oturma sıraları at nalı biçiminde düzenlenmiş; konuşmacının sesi tüm salona eşit yayılacak şekilde tasarlanmıştı.
+        </p>
+        <div class="feature-quote">
+          <p>"Bu yapı 2.300 yıl önce inşa edildi — Türkiye Büyük Millet Meclisi'nden çok daha eski bir demokrasi geleneği."</p>
+          <cite>— Efes Tur Rehberi</cite>
+        </div>
+      </div>
+      <div class="feature-facts reveal">
+        <div class="feature-fact">
+          <span class="fact-icon">🏛</span>
+          <div class="fact-label">Kapasite</div>
+          <div class="fact-text">300–350 kişi kapasiteli, tamamen kapalı meclis binası</div>
+        </div>
+        <div class="feature-fact">
+          <span class="fact-icon">🔊</span>
+          <div class="fact-label">Akustik</div>
+          <div class="fact-text">At nalı oturma düzeni: herkes konuşmacıyı eşit görür ve duyar</div>
+        </div>
+        <div class="feature-fact">
+          <span class="fact-icon">🗿</span>
+          <div class="fact-label">İnşaat</div>
+          <div class="fact-text">Doğu cephesinde 15 metre yüksekliğinde duvar, ahşap çatı</div>
+        </div>
+        <div class="feature-fact">
+          <span class="fact-icon">♻️</span>
+          <div class="fact-label">Mermer Geri Dönüşüm</div>
+          <div class="fact-text">Mermerlerin söküldüğüne üzülmeyin: kireç yapımında kullanıldı</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HRİSTİYANLIK -->
+<section class="christianity-band">
+  <div class="container">
+    <p class="section-label">İnanç ve Tarih</p>
+    <h2 class="section-title">Efes ve Hristiyanlık</h2>
+    <div class="gold-divider"></div>
+    <p class="section-body">
+      Efes, erken Hristiyanlığın en kritik coğrafyasıdır. Aziz Pavlus burada yaklaşık iki yıl ikamet etmiş (MS 52–54) ve Efeslilere mektubunu kaleme almıştır. Aziz Yuhanna, Vahiy Kitabı'nı çevresindeki yedi önemli Hristiyan cemaatine gönderilen mesajlar olarak kaleme almıştır — bu <em>yedi melek şehri</em>nin tamamı bugün Türkiye sınırları içindedir.
+    </p>
+    <div class="seven-cities">
+      <div class="city-pill active">Efes (Selçuk)</div>
+      <div class="city-pill">İzmir</div>
+      <div class="city-pill">Bergama</div>
+      <div class="city-pill">Thyateira</div>
+      <div class="city-pill">Sardes</div>
+      <div class="city-pill">Filadelfiya</div>
+      <div class="city-pill">Laodikya</div>
+    </div>
+  </div>
+</section>
+
+<!-- ÇEVRE -->
+<section class="around" id="cevre">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Efes Çevresi</p>
+      <h2 class="section-title">Bölgede Mutlaka Görülmeli</h2>
+      <div class="gold-divider"></div>
+      <p class="section-body">Efes antik kentinin tamamlanmasının ardından bölgenin manevi ve kültürel coğrafyası henüz bitmemiştir. Bu üçlü, Efes turunu tamamlayan ve bölgeyi salt arkeolojinin ötesine taşıyan ayrı bir katman oluşturur.</p>
+    </div>
+    <div class="around-grid">
+
+      <div class="around-card reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/House_of_the_Virgin_Mary_3.jpg/800px-House_of_the_Virgin_Mary_3.jpg" alt="Meryem Ana Evi" onerror="this.style.background='linear-gradient(135deg,#7ABFD8,#C8860A)'"/>
+        <div class="around-overlay">
+          <div class="around-num">18. Durak</div>
+          <div class="around-title">Meryem Ana Evi</div>
+          <div class="around-text">Bülbül Dağı eteklerinde, Meryem Ana'nın son yıllarını geçirdiğine inanılan taş yapı. Üç Papa burayı ziyaret etti: VI. Paul, II. Jean-Paul ve XVI. Benedict. Hem Hristiyanlar hem Müslümanlar için kutsal.</div>
+        </div>
+      </div>
+
+      <div class="around-card reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Basilica_of_St._John_-_Selcuk_Turkey.jpg/800px-Basilica_of_St._John_-_Selcuk_Turkey.jpg" alt="St. John Bazilikası" onerror="this.style.background='linear-gradient(135deg,#C1440E,#9E8B6E)'"/>
+        <div class="around-overlay">
+          <div class="around-num">19. Durak</div>
+          <div class="around-title">St. John Bazilikası</div>
+          <div class="around-text">Aziz Yuhanna'nın mezarı üzerine İmparator Justinianus tarafından MS 6. yüzyılda yaptırılan anıtsal bazilika. İnşaatında Artemis Tapınağı'nın sütunları kullanıldı: dünyanın yedi harikasından birinin taşları!</div>
+        </div>
+      </div>
+
+      <div class="around-card reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Sirince-market.jpg/800px-Sirince-market.jpg" alt="Şirince Köyü" onerror="this.style.background='linear-gradient(135deg,#C8860A,#C1440E)'"/>
+        <div class="around-overlay">
+          <div class="around-num">20. Durak</div>
+          <div class="around-title">Şirince Köyü</div>
+          <div class="around-text">Selçuk'tan 8 km uzakta, zeytinlikler arasında kurulu antik Rum köyü. 1923 nüfus mübadelesi sonrası iskân edilmiş taş evleri, meyve şarapları ve el dokumaları ile tanınır.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips" id="ipuclari">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Ziyaretçi Rehberi</p>
+      <h2 class="section-title">Pratik Tur Önerileri</h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-item reveal">
+        <div class="tip-icon">🚪</div>
+        <div>
+          <div class="tip-title">Doğru Yönde İlerl</div>
+          <div class="tip-text">Üst kapıdan girip alt kapıdan çıkın. Yolu kaybederseniz her zaman aşağıya doğru yürüyün — Efes'in tüm caddeleri yamaçtan aşağıya iner.</div>
+        </div>
+      </div>
+      <div class="tip-item reveal">
+        <div class="tip-icon">🎟</div>
+        <div>
+          <div class="tip-title">Terasevler Bileti</div>
+          <div class="tip-text">Terasevler için ayrı bilet kesinlikle değerlidir. Mozaikleri ve fresklerini görmeden geçmeyin; antik dünyanın en iyi korunmuş konut alanlarından biri.</div>
+        </div>
+      </div>
+      <div class="tip-item reveal">
+        <div class="tip-icon">📸</div>
+        <div>
+          <div class="tip-title">Fotoğraf Saatleri</div>
+          <div class="tip-text">Celsus Kütüphanesi cephesi sabah erken saatte fotoğraf için idealdir: batı cephesine döndüğünüzde güneş arkanızdan gelir. Öğleden sonra iç mekanlar ve gölgeli sokaklar daha güzel çıkar.</div>
+        </div>
+      </div>
+      <div class="tip-item reveal">
+        <div class="tip-icon">☀️</div>
+        <div>
+          <div class="tip-title">Hazırlık</div>
+          <div class="tip-text">Güneş kremi, bol su ve rahat (kaymaz tabanlı) ayakkabı şart. İçeride tuvalet bulunmaz; girişte ve çıkışta ücretsiz tesisler mevcuttur.</div>
+        </div>
+      </div>
+      <div class="tip-item reveal">
+        <div class="tip-icon">⏱</div>
+        <div>
+          <div class="tip-title">Süre Planlaması</div>
+          <div class="tip-text">Yaklaşık 3 km yürüme mesafesi söz konusu. Terasevler dahil toplamda 3.5–4.5 saat ayırmanızı öneririz. Sabahın erken saatlerinde kalabalık daha azdır.</div>
+        </div>
+      </div>
+      <div class="tip-item reveal">
+        <div class="tip-icon">🏺</div>
+        <div>
+          <div class="tip-title">Vandalizme Dikkat</div>
+          <div class="tip-text">Efes'in yalnızca %20'si bugüne kadar kazıldı. Geri kalanı hâlâ toprağın altında. Kalıntılara dokunmayın, üstüne çıkmayın; bu mirası gelecek nesillere aktarma sorumluluğumuz var.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">Efes</div>
+    <div class="footer-sub">Antik Kenti · Kapsamlı Tur Rehberi</div>
+    <div class="footer-divider"></div>
+    <div class="footer-copy">© 2024 · UNESCO Dünya Mirası · Selçuk, İzmir, Türkiye</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
