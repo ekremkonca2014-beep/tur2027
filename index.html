@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antik Kent Notlarım</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f0e8;
+  color: #2a1f0e;
+  display: flex;
+  min-height: 100vh;
+  font-size: 16px;
+}
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: #2a1f0e;
+  color: #e8d9b8;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.sidebar-logo {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo h1 {
+  font-size: 1rem;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  color: #c9a227;
+  line-height: 1.4;
+}
+
+.sidebar-logo small {
+  display: block;
+  font-size: 0.72rem;
+  color: #7a6a4a;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.sidebar-section {
+  padding: 12px 0 4px;
+}
+
+.sidebar-section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: #5a4a2a;
+  padding: 0 20px 6px;
+  text-transform: uppercase;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #b8a880;
+  transition: background 0.15s, color 0.15s;
+  border-left: 3px solid transparent;
+  line-height: 1.3;
+}
+
+.sidebar-item:hover {
+  background: rgba(201,162,39,0.08);
+  color: #e8d9b8;
+}
+
+.sidebar-item.active {
+  background: rgba(201,162,39,0.12);
+  color: #c9a227;
+  border-left-color: #c9a227;
+}
+
+.sidebar-item .icon { font-size: 1rem; flex-shrink: 0; }
+
+/* Sub-items (duraklar) */
+.sidebar-sub {
+  display: none;
+  background: rgba(0,0,0,0.2);
+}
+
+.sidebar-sub.open { display: block; }
+
+.sidebar-sub-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px 6px 36px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: #7a6a4a;
+  transition: color 0.15s;
+}
+
+.sidebar-sub-item:hover { color: #c9a227; }
+.sidebar-sub-item.active { color: #c9a227; }
+
+.sub-num {
+  font-size: 0.65rem;
+  color: #5a4a2a;
+  min-width: 18px;
+}
+
+/* ── MAIN CONTENT ── */
+#content {
+  margin-left: 240px;
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── HOME ── */
+.home-wrap {
+  padding: 48px 40px;
+  max-width: 800px;
+}
+
+.home-title {
+  font-size: 1.8rem;
+  color: #2a1f0e;
+  margin-bottom: 8px;
+  font-weight: normal;
+}
+
+.home-sub {
+  color: #7a6a4a;
+  font-style: italic;
+  margin-bottom: 40px;
+  font-size: 0.95rem;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.home-card {
+  background: #fff;
+  border: 1px solid #d8c9a0;
+  border-radius: 4px;
+  padding: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.home-card:hover {
+  box-shadow: 0 4px 16px rgba(42,31,14,0.12);
+  border-color: #c9a227;
+}
+
+.home-card .icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+.home-card h3 { font-size: 0.95rem; margin-bottom: 6px; color: #2a1f0e; }
+.home-card p { font-size: 0.8rem; color: #7a6a4a; font-style: italic; line-height: 1.4; }
+
+/* ── CATEGORY PAGE ── */
+.cat-header {
+  background: #2a1f0e;
+  color: #e8d9b8;
+  padding: 32px 40px;
+}
+
+.cat-header h2 {
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: #c9a227;
+  margin-bottom: 4px;
+}
+
+.cat-header p {
+  font-size: 0.9rem;
+  color: #7a6a4a;
+  font-style: italic;
+}
+
+.cat-body {
+  padding: 32px 40px;
+  max-width: 820px;
+}
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 36px;
+}
+
+.section-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7a6a4a;
+  border-bottom: 1px solid #d8c9a0;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+/* ── INTRO BOX ── */
+.intro-box {
+  background: #fff;
+  border: 1px solid #d8c9a0;
+  border-left: 4px solid #c9a227;
+  padding: 20px 24px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.intro-box strong { color: #2a1f0e; }
+
+/* ── ROTA ── */
+.rota-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.rota-item {
+  background: #fff;
+  border: 1px solid #d8c9a0;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  line-height: 1.3;
+}
+
+.rota-item:hover { border-color: #c9a227; color: #8a6010; }
+.rota-num { color: #c9a227; font-size: 0.72rem; flex-shrink: 0; padding-top: 1px; }
+
+/* ── STOP CARDS ── */
+.stop-list { display: flex; flex-direction: column; gap: 10px; }
+
+.stop-card {
+  background: #fff;
+  border: 1px solid #d8c9a0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stop-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.stop-head:hover { background: #faf6ed; }
+.stop-card.open .stop-head { background: #faf6ed; }
+
+.stop-n {
+  width: 26px; height: 26px;
+  border: 1px solid #d8c9a0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem;
+  color: #c9a227;
+  flex-shrink: 0;
+  font-family: Georgia, serif;
+}
+
+.stop-name-text {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #2a1f0e;
+  line-height: 1.3;
+}
+
+.stop-toggle {
+  color: #7a6a4a;
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.stop-card.open .stop-toggle { transform: rotate(180deg); }
+
+.stop-body {
+  display: none;
+  padding: 16px 20px 20px;
+  border-top: 1px solid #f0e8d0;
+}
+
+.stop-card.open .stop-body { display: block; }
+
+.stop-body p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #3a2a10;
+  margin-bottom: 12px;
+}
+
+.stop-body p:last-child { margin-bottom: 0; }
+
+.detail-box {
+  background: #fdf8ef;
+  border: 1px solid #e8d9a0;
+  border-radius: 3px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+
+.detail-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c9a227;
+  margin-bottom: 8px;
+}
+
+.detail-box ul { list-style: none; padding: 0; }
+.detail-box li {
+  font-size: 0.84rem;
+  color: #5a4a2a;
+  padding: 3px 0 3px 14px;
+  position: relative;
+  line-height: 1.6;
+}
+.detail-box li::before { content: '›'; position: absolute; left: 0; color: #c9a227; }
+
+/* ── IMAGES ── */
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.img-tile {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid #d8c9a0;
+  cursor: pointer;
+  position: relative;
+}
+
+.img-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.img-tile:hover img { transform: scale(1.05); }
+
+.img-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: #e8d9b8; font-size: 0.72rem; padding: 16px 8px 6px;
+  font-style: italic;
+}
+
+/* ── LIGHTBOX ── */
+#lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:999; align-items:center; justify-content:center; cursor:pointer; }
+#lb.on { display:flex; }
+#lb img { max-width:90vw; max-height:88vh; object-fit:contain; border:1px solid #5a4a2a; }
+#lb-x { position:absolute; top:16px; right:20px; color:#7a6a4a; font-size:1.6rem; cursor:pointer; }
+
+/* ── MOBILE TOGGLE ── */
+#mob-toggle {
+  display: none;
+  position: fixed; top: 12px; left: 12px;
+  z-index: 200;
+  background: #2a1f0e;
+  color: #c9a227;
+  border: none;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+@media (max-width: 700px) {
+  #mob-toggle { display: block; }
+  #sidebar { left: -240px; transition: left 0.25s; }
+  #sidebar.mob-open { left: 0; }
+  #content { margin-left: 0; }
+  .cat-header, .cat-body, .home-wrap { padding-left: 20px; padding-right: 20px; }
+  .home-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<button id="mob-toggle" onclick="toggleMobile()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <h1>🏛️ Antik Kent<br>Notlarım</h1>
+    <small>Kişisel arkeoloji rehberi</small>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Kategoriler</div>
+
+    <!-- Ana Sayfa -->
+    <div class="sidebar-item active" id="nav-home" onclick="showPage('home')">
+      <span class="icon">🏠</span> Ana Sayfa
+    </div>
+
+    <!-- Efes -->
+    <div class="sidebar-item" id="nav-efes" onclick="toggleCat('efes')">
+      <span class="icon">🏛️</span> Efes Antik Kenti
+    </div>
+    <div class="sidebar-sub" id="sub-efes">
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollTo('efes-intro')"><span class="sub-num">ℹ</span>Genel Bilgi</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollTo('efes-rota')"><span class="sub-num">🗺</span>Tur Rotası</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','2')"><span class="sub-num">2</span>Gymnasium</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','3')"><span class="sub-num">3</span>Devlet Agorası</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','4')"><span class="sub-num">4</span>Bouleuterion</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','5')"><span class="sub-num">5</span>Prytaneion</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','6')"><span class="sub-num">6</span>Domitianus Tapınağı</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','10')"><span class="sub-num">10</span>Kuretenler Caddesi</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','12')"><span class="sub-num">12</span>Hadrian Tapınağı</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','13')"><span class="sub-num">13</span>Terasevler</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','14')"><span class="sub-num">14</span>Celsus Kütüphanesi</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollToStop('efes','16')"><span class="sub-num">16</span>Büyük Tiyatro</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollTo('efes-hristiyanlik')"><span class="sub-num">✝</span>Hristiyanlık</div>
+      <div class="sidebar-sub-item" onclick="showPage('efes'); scrollTo('efes-cevre')"><span class="sub-num">+</span>Çevre (Şirince vb.)</div>
+    </div>
+
+    <!-- Hierapolis -->
+    <div class="sidebar-item" id="nav-hier" onclick="toggleCat('hier')">
+      <span class="icon">♨️</span> Pamukkale / Hierapolis
+    </div>
+    <div class="sidebar-sub" id="sub-hier">
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollTo('hier-intro')"><span class="sub-num">ℹ</span>Genel Bilgi</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollTo('hier-rota')"><span class="sub-num">🗺</span>Tur Rotası</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','2')"><span class="sub-num">2</span>Nekropol</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','3')"><span class="sub-num">3</span>Kuzey Hamamı</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','4')"><span class="sub-num">4</span>Merkez Caddesi</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','5')"><span class="sub-num">5</span>Apollon Tapınağı</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','7')"><span class="sub-num">7</span>Büyük Tiyatro</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','10')"><span class="sub-num">10</span>Beyaz Teraslar</div>
+      <div class="sidebar-sub-item" onclick="showPage('hier'); scrollToStop('hier','11')"><span class="sub-num">11</span>Kleopatra Havuzu</div>
+    </div>
+
+    <!-- Bergama -->
+    <div class="sidebar-item" id="nav-berg" onclick="toggleCat('berg')">
+      <span class="icon">📜</span> Bergama / Pergamum
+    </div>
+    <div class="sidebar-sub" id="sub-berg">
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollTo('berg-intro')"><span class="sub-num">ℹ</span>Genel Bilgi</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollTo('berg-rota')"><span class="sub-num">🗺</span>Tur Rotası</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollTo('berg-akropol')"><span class="sub-num">I</span>Akropol</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollToStop('berg','2')"><span class="sub-num">2</span>Zeus Sunağı</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollToStop('berg','3')"><span class="sub-num">3</span>Athena Tapınağı & Kütüphane</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollToStop('berg','5')"><span class="sub-num">5</span>Akropol Tiyatrosu</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollToStop('berg','8')"><span class="sub-num">8</span>Kızıl Avlu</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollTo('berg-asklepion')"><span class="sub-num">II</span>Asklepion</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollToStop('berg','12')"><span class="sub-num">12</span>Tedavi Kompleksi</div>
+      <div class="sidebar-sub-item" onclick="showPage('berg'); scrollToStop('berg','13')"><span class="sub-num">13</span>Tünel & İnkübasyon</div>
+    </div>
+
+    <!-- Priene / Milet / Didim -->
+    <div class="sidebar-item" id="nav-pmd" onclick="toggleCat('pmd')">
+      <span class="icon">🔱</span> Priene · Milet · Didim
+    </div>
+    <div class="sidebar-sub" id="sub-pmd">
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollTo('pmd-intro')"><span class="sub-num">ℹ</span>Genel Bakış</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollTo('pmd-priene')"><span class="sub-num">P</span>Priene</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','P3')"><span class="sub-num">P3</span>Athena Tapınağı</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','P4')"><span class="sub-num">P4</span>Bouleuterion</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','P5')"><span class="sub-num">P5</span>Tiyatro</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollTo('pmd-milet')"><span class="sub-num">M</span>Milet</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','M2')"><span class="sub-num">M2</span>Büyük Tiyatro</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','M3')"><span class="sub-num">M3</span>Delphinion</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollTo('pmd-didim')"><span class="sub-num">D</span>Didim</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','D3')"><span class="sub-num">D3</span>Pronaos – Sütunlar</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','D4')"><span class="sub-num">D4</span>Adyton – Kutsal Pınar</div>
+      <div class="sidebar-sub-item" onclick="showPage('pmd'); scrollToStop('pmd','D5')"><span class="sub-num">D5</span>Kehanet Odası</div>
+    </div>
+  </div>
+
+    <!-- Türkiye Tarihi -->
+    <div class="sidebar-item" id="nav-tarih" onclick="toggleCat('tarih')">
+      <span class="icon">🇹🇷</span> Türkiye Tarihi
+    </div>
+    <div class="sidebar-sub" id="sub-tarih">
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-giris')"><span class="sub-num">ℹ</span>Giriş & Genel Bakış</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-prehistorik')"><span class="sub-num">1</span>Prehistorik & Anadolu</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-yunan')"><span class="sub-num">2</span>Yunan & Roma</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-bizans')"><span class="sub-num">3</span>Bizans</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-selcuklu')"><span class="sub-num">4</span>Selçuklu</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-osmanli')"><span class="sub-num">5</span>Osmanlı</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-cumhuriyet')"><span class="sub-num">6</span>Cumhuriyet</div>
+      <div class="sidebar-sub-item" onclick="showPage('tarih'); scrollTo('tarih-otobus')"><span class="sub-num">🚌</span>Otobüs Anlatımları</div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="content">
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="home-wrap">
+      <h2 class="home-title">🏛️ Antik Kent Notlarım</h2>
+      <p class="home-sub">Kişisel arkeoloji ve tarih rehberi — sol menüden kategori seçin veya aşağıdaki kartlara tıklayın.</p>
+      <div class="home-grid">
+        <div class="home-card" onclick="toggleCat('efes'); showPage('efes')">
+          <span class="icon">🏛️</span>
+          <h3>Efes Antik Kenti</h3>
+          <p>17 durak · Kapsamlı tur rehberi</p>
+        </div>
+        <div class="home-card" onclick="toggleCat('hier'); showPage('hier')">
+          <span class="icon">♨️</span>
+          <h3>Pamukkale / Hierapolis</h3>
+          <p>12 durak · Beyaz teraslar & antik şehir</p>
+        </div>
+        <div class="home-card" onclick="toggleCat('berg'); showPage('berg')">
+          <span class="icon">📜</span>
+          <h3>Bergama / Pergamum</h3>
+          <p>13 durak · Akropol & Asklepion</p>
+        </div>
+        <div class="home-card" onclick="toggleCat('pmd'); showPage('pmd')">
+          <span class="icon">🔱</span>
+          <h3>Priene · Milet · Didim</h3>
+          <p>3 antik kent · Tek günlük tur</p>
+        </div>
+        <div class="home-card" onclick="toggleCat('tarih'); showPage('tarih')">
+          <span class="icon">🇹🇷</span>
+          <h3>Türkiye Tarihi</h3>
+          <p>6 dönem · Prehistorik'ten Cumhuriyet'e · Otobüs anlatımları</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ EFES ═══════════ -->
+  <div class="page" id="page-efes">
+    <div class="cat-header">
+      <h2>🏛️ Efes Antik Kenti</h2>
+      <p>Kapsamlı Tur Rehberi · Üst Kapıdan Tiyatroya · ~3 km · 3–3.5 saat</p>
+    </div>
+    <div class="cat-body">
+
+      <div class="section" id="efes-img">
+        <div class="section-title">Görüntüler</div>
+        <div class="img-grid">
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Efes_Celsus_library.jpg/800px-Efes_Celsus_library.jpg" loading="lazy"><div class="img-cap">Celsus Kütüphanesi</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Temple_of_Hadrian_Ephesus_1.JPG/800px-Temple_of_Hadrian_Ephesus_1.JPG" loading="lazy"><div class="img-cap">Hadrian Tapınağı</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Ephesus_Amphitheater.jpg/800px-Ephesus_Amphitheater.jpg" loading="lazy"><div class="img-cap">Büyük Tiyatro</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Ephesus_Curetes_Street.JPG/800px-Ephesus_Curetes_Street.JPG" loading="lazy"><div class="img-cap">Kuretenler Caddesi</div></div>
+        </div>
+      </div>
+
+      <div class="section" id="efes-intro">
+        <div class="section-title">Genel Bilgi</div>
+        <div class="intro-box">
+          <p>MÖ 11. yüzyılda İyonyalı Yunanlılar tarafından Küçük Menderes nehrinin ağzına kurulan Efes, MS 1. yüzyılda <strong>200.000–250.000</strong> nüfusuyla Roma'nın İtalya dışındaki en büyük şehirlerinden biriydi. Roma döneminde tüm Ön Asya eyaletinin (<em>Asia Provincia</em>) başkentiydi.</p>
+          <p>Bugün Efes kalıntıları denizden yaklaşık <strong>8 km içeridedir</strong> — liman yüzyıllar içinde alüvyonla doldu. Şehrin yalnızca <strong>%20'si</strong> bugüne kadar kazılmıştır.</p>
+        </div>
+        <div class="detail-box">
+          <div class="detail-label">✨ İlginç Detaylar</div>
+          <ul>
+            <li>Efes defalarca taşındı: nehir her seferinde limanı doldurdu.</li>
+            <li>Şehrin her 75 metrede bir çeşmesi vardı — antik dünyanın en demokratik su dağıtım sistemlerinden biri.</li>
+            <li>Hipodamik ızgara sokak planı bugünkü Manhattan'ın ilham kaynağıdır.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section" id="efes-rota">
+        <div class="section-title">Tur Rotası (Üst Kapı → Tiyatro)</div>
+        <div class="rota-grid">
+          <div class="rota-item" onclick="scrollToStop('efes','2')"><span class="rota-num">1</span>Üst Kapı Girişi</div>
+          <div class="rota-item" onclick="scrollToStop('efes','2')"><span class="rota-num">2</span>Gymnasium</div>
+          <div class="rota-item" onclick="scrollToStop('efes','3')"><span class="rota-num">3</span>Devlet Agorası</div>
+          <div class="rota-item" onclick="scrollToStop('efes','4')"><span class="rota-num">4</span>Bouleuterion</div>
+          <div class="rota-item" onclick="scrollToStop('efes','5')"><span class="rota-num">5</span>Prytaneion</div>
+          <div class="rota-item" onclick="scrollToStop('efes','6')"><span class="rota-num">6</span>Domitianus Tapınağı</div>
+          <div class="rota-item" onclick="scrollToStop('efes','10')"><span class="rota-num">10</span>Kuretenler Caddesi</div>
+          <div class="rota-item" onclick="scrollToStop('efes','12')"><span class="rota-num">12</span>Hadrian Tapınağı</div>
+          <div class="rota-item" onclick="scrollToStop('efes','13')"><span class="rota-num">13</span>Terasevler ★</div>
+          <div class="rota-item" onclick="scrollToStop('efes','14')"><span class="rota-num">14</span>Celsus Kütüphanesi</div>
+          <div class="rota-item" onclick="scrollToStop('efes','16')"><span class="rota-num">16</span>Büyük Tiyatro</div>
+          <div class="rota-item" onclick="scrollToStop('efes','17')"><span class="rota-num">17</span>Liman Caddesi</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Önemli Yapılar</div>
+        <div class="stop-list">
+
+          <div class="stop-card" id="efes-s2">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">2</div>
+              <div class="stop-name-text">Gymnasium — Üç Kapılı Hamam</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MÖ 1. yüzyıla tarihlenen Varius Hamamı; üç girişli cephesi nedeniyle "üç kapılı hamam" olarak anılır. Gymnasium kavramı salt bir spor tesisini değil, antik dünyanın eğitim-spor-kültür kompleksini tanımlar.</p>
+              <p><strong>Hypocaust sistemi:</strong> Zemin ince tuğla sütuncuklar üzerine yükseltilir, altından sıcak hava dolaştırılır. Roma hamamları üç bölümden oluşurdu: soğuk <em>frigidarium</em>, ılık <em>tepidarium</em> ve sıcak <em>caldarium</em>.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Bugünkü yerden ısıtma sisteminin tam prototipi: Roma 2.000 yıl önce hypocaust ile aynı prensibi kullanıyordu.</li>
+                <li>Romalılar günde ortalama 2–3 saat hamamda geçirirdi; hamam sosyal medya gibiydi — burada dedikodu, iş ve politika konuşulurdu.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s3">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">3</div>
+              <div class="stop-name-text">Devlet Agorası (Yukarı Agora)</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Şehrin idari kalbi. İki sıra kolonla çevrilmiş geniş bir alan; üstü ahşap çatılı stoa galerileriyle örtülüydü. Agora yalnızca bir meydan değil, Yunan demokrasisinin fiziksel temelidir. Yasalar tartışılır, mahkemeler kurulur, elçiler karşılanırdı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Efes, Roma'nın en çok vergi ödeyen eyaletinin başkentiydi. Buraya atanan vali imparatorluğun en stratejik bölgelerinden birini yönetiyordu.</li>
+                <li>Manhattan'ın ızgara sokak planı MÖ 5. yüzyılda Miletli mimar Hippodamos'un geliştirdiği sistemden ilham alır.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s4">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">4</div>
+              <div class="stop-name-text">Bouleuterion — Parlamento</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Kelime anlamıyla "danışma yeri"; MÖ 3. yüzyıla tarihlenen bu yapı yaklaşık <strong>300–350 kişi</strong> kapasiteliydi ve tamamen kapalıydı. Oturma sıraları at nalı biçiminde düzenlenmiş; konuşmacının sesi tüm salona eşit yayılacak şekilde tasarlanmıştı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Bu yapı 2.300 yıl önce inşa edildi — Türkiye Büyük Millet Meclisi'nden çok daha eski bir demokrasi geleneği.</li>
+                <li>Mermerin söküldüğüne üzülmeyin: kireç yapımında kullanılmış — antik mimari böyle "geri dönüştürülürdü".</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s5">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">5</div>
+              <div class="stop-name-text">Prytaneion — Belediye Binası</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Şehrin "kalbi" olarak tanımlanabilecek en kutsal idari mekân. Burada hiç söndürülmeden yanan <strong>kutsal ateş</strong> bulunurdu; Hestia tanrıçasına adanmış bu alev şehrin sürekliliğini simgeliyordu. Olimpiyat şampiyonları ve elçiler burada devlet adına ağırlanırdı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Olimpiyat meşalesi geleneği buradan geliyor: her dört yılda bir Olimpia'dan alınan ateş dünyayı dolaşıyor.</li>
+                <li>Selçuk Efes Müzesi'ndeki ünlü Artemis heykelleri tam olarak bu yapıdan çıkarıldı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s6">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">6</div>
+              <div class="stop-name-text">Domitianus Tapınağı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 1. yüzyılın sonunda İmparator Domitianus adına inşa edilen bu tapınak Efes'teki imparatorluk kültünün ilk büyük anıtıdır. Domitianus öldükten sonra Roma Senatosu <strong>damnatio memoriae</strong> (hafızanın lanetlenmesi) kararıyla adını resmi belgelerden sildi, heykellerini yıktırdı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Damnatio memoriae: tarihin ilk "silme kültürü" — Roma Senatosu beğenmediği imparatorun adını her yerde kazıtırdı.</li>
+                <li>Hristiyanların Roma'da zulüm görmesinin temel nedeni buydu: imparatoru tanrı olarak kabul etmeyi reddediyorlardı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s10">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">10</div>
+              <div class="stop-name-text">Kuretenler Caddesi</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Efes'in ana omurgası; Herkül Kapısı'ndan Celsus Kütüphanesi'ne uzanır. Yaklaşık <strong>210 metre</strong> uzunluğunda ve tamamen mermer kaplıdır. Cadde boyunca Mısırlılar, Latinler, Yahudiler, Galatlar bir aradaydı. Ortak dil Yunancaydı; bu sayede İncil Koine Yunancasıyla kaleme alınmıştır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>İncil'in Yunanca yazılmasının nedeni bu cadde: Helenistik dönemde Yunanca tüm Akdeniz'in ortak dili haline geldi.</li>
+                <li>İstanbul Beyoğlu ya da Londra Oxford Street — ama 2.000 yıl önce ve tamamen mermer kaplı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s12">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">12</div>
+              <div class="stop-name-text">Hadrian Tapınağı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 117–138 yılları arasında inşa edilen Efes'in en zarif yapısı. Cephesinde iki tip kemer: altta düz arşitrav, üstte zafer takı biçiminde kemer. Giriş kemerinin kilit taşında <strong>Tyche</strong> (şehrin koruyucu tanrıçası); iç kemerde <strong>Medusa başı</strong> yer alır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Medusa neden tapınak girişinde? Kötü nazarı uzak tuttuğuna inanılırdı — antik dünyanın nazar boncuğu.</li>
+                <li>İç friz panolarında şehrin efsanevi kuruluş hikayesi: Androclus yaban domuzu kovalayarak Efes'in yerine ulaştı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s13">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">13</div>
+              <div class="stop-name-text">Terasevler ★ (Ayrı Bilet)</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 1.–7. yüzyıllar arasında kesintisiz iskân görmüş, Efes'in en varlıklı ailelerine ait konut kompleksi. Antik dünyanın en iyi korunmuş konut alanlarından biri. Mozaik tekniğinde tessera adı verilen küçük taş/cam parçaları elle döşenmiştir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Bazı mozaiklerin çocuk işçiler tarafından döşendiği düşünülüyor: küçük eller ince tessera parçalarını yerleştirmeye daha elverişliydi.</li>
+                <li>Duvarları kaplayan freskler Pompei fresklerini aratmaz; mitolojik sahneler en yaygın temadır.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s14">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">14</div>
+              <div class="stop-name-text">Celsus Kütüphanesi</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 117 yılında babası Celsus anısına yaptırılan bu kütüphane antik dünyanın <strong>üçüncü büyüğüdür</strong>; İskenderiye ve Bergama'dan sonra. Yaklaşık <strong>12.000 rulo eser</strong> barındırdığı tahmin edilmektedir. Cephede dört nişte: Sophia, Arete, Ennoia ve Episteme heykelleri (orijinalleri Viyana'da).</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Celsus'un mezarı hâlâ burada, ayaklarınızın altında. Kütüphanenin zemini onun lahdinin üzerine inşa edildi.</li>
+                <li>1970'lerde Avusturyalı arkeologlar tarafından orijinal parçaların %80'i kullanılarak iki buçuk yılda yeniden ayağa kaldırıldı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s16">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">16</div>
+              <div class="stop-name-text">Büyük Tiyatro</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Yaklaşık <strong>25.000 kişi</strong> kapasiteli bu tiyatro yalnızca sanat mekânı değildi; gladyatör dövüşleri de burada yapılırdı. Aziz Pavlus'a karşı başlatılan ünlü ayaklanma burada gerçekleşti: Artemis heykelcikleri satan gümüşçüler kalabalığı kışkırttı, binlerce kişi saatlerce "Büyük Efes Artemisi!" diye bağırdı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Akustik hâlâ mükemmel: mikrofonsuz tiyatronun ortasında normal sesle konuştuğunuzda en üst sırada bile duyulursunuz.</li>
+                <li>Pavlus ayaklanması Elçilerin İşleri 19. bölümde anlatılır — tarihin ilk belgelenmiş ticari lobicilik eylemlerinden biri.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="efes-s17">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">17</div>
+              <div class="stop-name-text">Liman Caddesi (Arcadiane)</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 395–408 yılları arasında döşenen bu cadde tiyatrodan antik limana uzanır; <strong>530 metre</strong> uzunluğunda, 11 metre genişliğinde ve tamamen mermer kaplıdır. Caddenin sonunda artık deniz yoktur; alüvyonla dolmuş liman bugün <strong>pamuk tarlalarına</strong> dönmüştür.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Bu cadde geceleri aydınlatılırdı — antik dünyanın sokak lambası bulunan sayılı şehirlerinden biri.</li>
+                <li>Efes'in yalnızca %20'si kazıldı; pamuk tarlalarının altında hâlâ keşfedilmemiş alanlar var.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section" id="efes-hristiyanlik">
+        <div class="section-title">Efes ve Hristiyanlık</div>
+        <div class="intro-box">
+          <p>Aziz Pavlus burada yaklaşık <strong>iki yıl</strong> ikamet etmiş (MS 52–54) ve Efeslilere mektubunu kaleme almıştır. 14 yılda yaklaşık <strong>15.000 kilometre</strong> yürümüştür.</p>
+          <p>Aziz Yuhanna Vahiy Kitabı'nı yedi cemaate göndermiştir: Efes, İzmir, Bergama, Thyateira, Sardes, Filadelfiya ve Laodikya. Bu <strong>"yedi melek şehri"</strong>nin tamamı bugün Türkiye sınırları içindedir.</p>
+        </div>
+        <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+          <li>Yedi melek şehrinin tamamı bugünkü Türkiye'de. Erken Hristiyanlığın kalbi Anadolu'ydu.</li>
+          <li>Pavlus bir mektup yazdığında tüm cemaate yüksek sesle okunurdu — antik dönemin podcast'i.</li>
+        </ul></div>
+      </div>
+
+      <div class="section" id="efes-cevre">
+        <div class="section-title">Çevre: Meryem Ana Evi · St. John Bazilikası · Şirince</div>
+        <div class="stop-list">
+          <div class="stop-card">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">18</div>
+              <div class="stop-name-text">Meryem Ana Evi</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Selçuk'tan yaklaşık 9 km güneyde, Bülbül Dağı'nın eteklerinde. Almanyalı mistik Katherine Emmerich (1774–1824) hiç Türkiye'ye gelmeden, yalnızca vizyonlarıyla bu evin konumunu tarif etti. 1891'de Fransız rahipler tarifleri rehber alarak yapıya ulaştı. Hem Hristiyanlar hem Müslümanlar için kutsal.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Üç papa ziyaret etti: VI. Paul (1967), II. Jean-Paul (1979), XVI. Benedict (2006).</li>
+                <li>Dilek duvarı: Müslüman, Hristiyan, ateist fark etmeksizin herkes dilek yazıp duvara iliştiriyor.</li>
+              </ul></div>
+            </div>
+          </div>
+          <div class="stop-card">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">19</div>
+              <div class="stop-name-text">St. John Bazilikası</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Aziz Yuhanna'nın mezarı üzerine inşa edilmiş anıtsal bazilika. Bugünkü yapı İmparator <strong>Justinianus</strong> tarafından MS 6. yüzyılda yaptırıldı — Ayasofya'yı inşa eden aynı imparator. Bazilikanın inşasında <strong>Efes Artemis Tapınağı'nın sütunları</strong> kullanıldı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Dünyanın yedi harikasından birinin taşları, Hristiyan mabedine girdi.</li>
+                <li>Selçuk'un adı Aziz Yuhanna'nın Yunanca adı "Hagios Theologos"dan geldiği söylenir.</li>
+              </ul></div>
+            </div>
+          </div>
+          <div class="stop-card">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">20</div>
+              <div class="stop-name-text">Şirince Köyü</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Selçuk'tan 8 km uzakta, zeytinlikler arasında kurulu eski Rum köyü. 1923 Türk-Yunan nüfus mübadelesi sonrasında Yunanistan'dan gelen Müslüman Türkler tarafından iskân edildi. Meyve şarapları, zeytinyağlı sabunları ve el dokumaları ile tanınır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>2012'de "dünyanın sonu" söylentisiyle manşetlere çıktı: Maya takvimine göre 21 Aralık 2012'de buraya akın yaşandı.</li>
+                <li>Köydeki kilise bugün camiye dönüştürülmüş; Rum freskleri ve Yunanca yazıtlar iç duvarlarda hâlâ görülebilir.</li>
+              </ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════ HİERAPOLİS ═══════════ -->
+  <div class="page" id="page-hier">
+    <div class="cat-header">
+      <h2>♨️ Pamukkale / Hierapolis</h2>
+      <p>Kapsamlı Tur Rehberi · ~3–4 km · 4–4.5 saat · Kuzey Kapısından Travertenlere</p>
+    </div>
+    <div class="cat-body">
+
+      <div class="section">
+        <div class="section-title">Görüntüler</div>
+        <div class="img-grid">
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Pamukkale_Travertines.jpg/800px-Pamukkale_Travertines.jpg" loading="lazy"><div class="img-cap">Travertenler</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Hierapolis_theatre.jpg/800px-Hierapolis_theatre.jpg" loading="lazy"><div class="img-cap">Hierapolis Tiyatrosu</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Hierapolis_Necropolis.jpg/800px-Hierapolis_Necropolis.jpg" loading="lazy"><div class="img-cap">Nekropol</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Cleopatra_Pool_Pamukkale.jpg/800px-Cleopatra_Pool_Pamukkale.jpg" loading="lazy"><div class="img-cap">Kleopatra Havuzu</div></div>
+        </div>
+      </div>
+
+      <div class="section" id="hier-intro">
+        <div class="section-title">Genel Bilgi</div>
+        <div class="intro-box">
+          <p>Pamukkale Türkçede <strong>"Pamuk Kalesi"</strong> demektir. Binlerce yıl boyunca dağın içinden yükselen kalsiyumca zengin termal sular, yüzeye çıktıktan sonra soğuyarak kalsiyum karbonat biriktirir. Bu işlem her yıl ortalama <strong>1–3 mm</strong> kalınlığında beyaz travertenler oluşturur.</p>
+          <p>MÖ 2. yüzyılda kurulan Hierapolis ("Kutsal Şehir"), termal sulara atfedilen iyileştirici özellikler nedeniyle Anadolu'nun en önemli <strong>şifa merkezi</strong> haline geldi. MS 1.–3. yüzyıllarda nüfusunun <strong>100.000'e</strong> ulaştığı tahmin edilmektedir.</p>
+        </div>
+        <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+          <li>Travertenler canlıdır: her gün yeni kireçtaşı çökelir. Ancak 20. yüzyılda yapılan oteller ve aşırı turizm bu oluşumu ciddi ölçüde yavaşlattı.</li>
+          <li>Termal şehirde ölüm oranının yüksek olmasının nedeni: şifa arayan hastalar — bu yüzden nekropol bu kadar büyük.</li>
+        </ul></div>
+      </div>
+
+      <div class="section" id="hier-rota">
+        <div class="section-title">Tur Rotası</div>
+        <div class="rota-grid">
+          <div class="rota-item"><span class="rota-num">1</span>Kuzey Kapısı Girişi</div>
+          <div class="rota-item" onclick="scrollToStop('hier','2')"><span class="rota-num">2</span>Nekropol</div>
+          <div class="rota-item" onclick="scrollToStop('hier','3')"><span class="rota-num">3</span>Kuzey Hamamı</div>
+          <div class="rota-item" onclick="scrollToStop('hier','4')"><span class="rota-num">4</span>Merkez Caddesi</div>
+          <div class="rota-item" onclick="scrollToStop('hier','5')"><span class="rota-num">5</span>Apollon Tapınağı</div>
+          <div class="rota-item"><span class="rota-num">6</span>Arkeoloji Müzesi</div>
+          <div class="rota-item" onclick="scrollToStop('hier','7')"><span class="rota-num">7</span>Büyük Tiyatro</div>
+          <div class="rota-item"><span class="rota-num">8</span>Nymphaeum & Agora</div>
+          <div class="rota-item"><span class="rota-num">9</span>Güney Hamamı</div>
+          <div class="rota-item" onclick="scrollToStop('hier','10')"><span class="rota-num">10</span>Beyaz Teraslar</div>
+          <div class="rota-item" onclick="scrollToStop('hier','11')"><span class="rota-num">11</span>Kleopatra Havuzu</div>
+          <div class="rota-item"><span class="rota-num">12</span>Pamukkale Köyü</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Önemli Yapılar & Alanlar</div>
+        <div class="stop-list">
+
+          <div class="stop-card" id="hier-s2">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">2</div>
+              <div class="stop-name-text">Nekropol — Antik Mezarlık</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Hierapolis Nekropolü, antik dünyanın <strong>en büyük ve en iyi korunmuş</strong> mezarlıklarından biridir. Binlerce lahit, mezar anıtı ve tümülüs barındırır. Antik Roma'da ölüler şehir surlarının dışına, ana yolların kenarına gömülürdü. Sarkofajların üzerindeki yazıtlardan sahibinin mesleğini, sosyal statüsünü ve hatta mezara zarar verenlere yönelik lanetleri okuyabiliyoruz.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>"Bu mezara zarar vereni 2.000 dinar para cezası bekler" gibi yazıtlar var — antik dünyanın hukuki belgesi.</li>
+                <li>Hierapolis şifa merkezi olduğundan hastalığından kurtulamıyıp burada ölen ziyaretçilerle dolup taştı — nekropolün büyümesinin bir nedeni bu.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="hier-s3">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">3</div>
+              <div class="stop-name-text">Kuzey Hamamı & Bizans Kapısı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Roma döneminde inşa edilen ve Bizans döneminde kiliseye dönüştürülen bu yapı kompleksi, antik mekânların farklı çağlarda farklı işlevler kazandığını gösteren mükemmel bir örnektir. Hypocaust ısıtma sisteminin izleri zemin düzeyinde görülebilir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Hierapolis hamamı diğerlerinden farklıydı: su ısıtılmak zorunda değildi, doğrudan sıcak kaynaktan geliyordu.</li>
+                <li>Bizans döneminde pek çok Roma tapınağı ve hamamı kiliseye çevrildi — aynı duvarlar, farklı inanç.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="hier-s4">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">4</div>
+              <div class="stop-name-text">Merkez Caddesi — Plateia</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Hierapolis'in omurgasını oluşturan bu ana cadde yaklaşık <strong>1.190 metre</strong> uzunluğunda ve <strong>13,5 metre</strong> genişliğindedir — antik dünyanın en geniş cadde örneklerinden biri. Her iki yanında sütunlu galeriler, taberna dükkanları ve heykel kaideleri uzanırdı. Aynı zamanda kutsal yoldu: her yıl Apollon Tapınağı'na dini alaylar bu caddeden geçerdi.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Bu cadde üzerinden kimler geçti: tüccarlar, hacılar, gladyatörler, filozoflar, imparatorlar.</li>
+                <li>Farklı dönemlerin izleri bir arada: Hellenistik sütun başlıkları, Roma kaldırımı, Bizans onarımları.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="hier-s5">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">5</div>
+              <div class="stop-name-text">Apollon Tapınağı & Plutonion</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Apollon Tapınağı, Hierapolis'in baş tanrısına adanmış kutsal alandır. Hemen yanında yer alan <strong>Plutonion</strong> (Hades Kapısı) ise yeraltı dünyasının girişi olarak kabul edilen ölümcül zehirli gaz çıkan bir mağaradır. Antik dönemde buraya atılan hayvanların öldüğü gözlemlenmiş; kâhinler ve rahipler bu alanı gizemli güçlerini kanıtlamak için kullanmıştır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Plutonion'dan çıkan gaz aslında volkanik CO₂ — hayvanları öldürüyor, eğitimli kâhinler ise nefes tutarak hayatta kalıyordu.</li>
+                <li>Strabon bu mağarayı ziyaret etmiş ve içine attığı hayvanların öldüğünü bizzat aktarmıştır.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="hier-s7">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">7</div>
+              <div class="stop-name-text">Büyük Tiyatro</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 2. yüzyılda inşa edilen tiyatro yaklaşık <strong>12.000–15.000 kişi</strong> kapasiteliydi. Sahne binası (skene) üç katlı, zengin kabartmalar ve heykellerle süslenmiştir. Mitolojik sahneler, tanrı ve tanrıça figürleri sahne binasının cephesini süsler. Korunma durumu Efes ve Bergama tiyatrolarıyla kıyaslanabilir düzeydedir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Sahne binasındaki kabartmalarda Apollon, Artemis ve Dionysus sahneleri en iyi korunmuş örnekler arasındadır.</li>
+                <li>Hierapolis tiyatrosu müzik festivallerinin de mekânıydı: şifa kenti olmak yalnızca tıpla değil, sanatla da ilgiliydi.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="hier-s10">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">10</div>
+              <div class="stop-name-text">Travertenlere İniş — Beyaz Teraslar</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Travertenlerde yürürken <strong>ayakkabı çıkartmak zorunludur</strong>. Kalsiyum yüzeyi çıplak ayakla basılması hem koruma hem kaymamazlık için şarttır. Her yıl ortalama 1–3 mm yeni kireçtaşı çökelir. Termal sular 35–57°C sıcaklığında Çal Dağı'nın içinden gelir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Travertenler için en iyi fotoğraf ışığı sabah erken ya da öğleden sonra geç saattir.</li>
+                <li>20. yüzyılda yapılan oteller ve aşırı turizm nedeniyle beyazlık ciddi ölçüde azaldı — şu an koruma altında.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="hier-s11">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">11</div>
+              <div class="stop-name-text">Antik Havuz — Kleopatra Havuzu</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 7. yüzyılda yaşanan depremde yıkılan antik sütunlar ve mimari parçaların düştüğü termal havuz. Yaklaşık <strong>36°C</strong> sıcaklığında, ücretli olarak yüzülebilir. "Kleopatra Havuzu" adı bir efsanedir; Kleopatra'nın burada yıkandığına dair tarihsel kanıt yoktur — ancak ad yapışmıştır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Havuzda antik sütun tamburları, başlıklar ve mimari parçalar hâlâ dipte durmaktadır — yüzerken tarihin üzerinden geçersiniz.</li>
+                <li>Suyun mineral içeriği yüksek; yüzmek için ek bilet gerekmektedir.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ BERGAMA ═══════════ -->
+  <div class="page" id="page-berg">
+    <div class="cat-header">
+      <h2>📜 Bergama / Pergamum</h2>
+      <p>Kapsamlı Tur Rehberi · Akropol & Asklepion · ~5–6 km · 5–6 saat</p>
+    </div>
+    <div class="cat-body">
+
+      <div class="section">
+        <div class="section-title">Görüntüler</div>
+        <div class="img-grid">
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Pergamon_Acropolis.jpg/800px-Pergamon_Acropolis.jpg" loading="lazy"><div class="img-cap">Bergama Akropolü</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Pergamon_theatre.jpg/800px-Pergamon_theatre.jpg" loading="lazy"><div class="img-cap">Akropol Tiyatrosu</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Kizil_avlu_bergama.jpg/800px-Kizil_avlu_bergama.jpg" loading="lazy"><div class="img-cap">Kızıl Avlu</div></div>
+          <div class="img-tile" onclick="lb(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Pergamon_Asklepion.jpg/800px-Pergamon_Asklepion.jpg" loading="lazy"><div class="img-cap">Asklepion</div></div>
+        </div>
+      </div>
+
+      <div class="section" id="berg-intro">
+        <div class="section-title">Genel Bilgi</div>
+        <div class="intro-box">
+          <p>MÖ 282'de hazine bekçisi Filetairos, kendisine emanet edilen hazineyi kullanarak bağımsız bir krallık kurdu. Attalos hanedanı, yaklaşık 150 yıl içinde Bergama'yı Helenistik dünyanın <strong>en önemli ikinci başkentine</strong> dönüştürdü.</p>
+          <p>MÖ 133'te son kral III. Attalos, krallığını <strong>savaşsız ve kansız</strong> bir şekilde Roma'ya vasiyet etti. Bergama Roma Asia eyaletinin başkenti oldu.</p>
+        </div>
+        <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+          <li>Bergama, İskenderiye ile kütüphane rekabetine girdi. İskenderiye papirüs ihracatını yasaklayınca Bergamalılar parşömeni (pergament) icat etti. "Pergament" kelimesi Pergamon'dan gelir.</li>
+          <li>Bergama Krallığı gücünü diplomasi, kültür ve stratejik Roma ittifakıyla korudu — büyük bir orduya hiç sahip olmadı.</li>
+        </ul></div>
+      </div>
+
+      <div class="section" id="berg-rota">
+        <div class="section-title">Tur Rotası</div>
+        <div class="rota-grid">
+          <div class="rota-item" onclick="scrollToStop('berg','1')"><span class="rota-num">1</span>Akropol Girişi</div>
+          <div class="rota-item" onclick="scrollToStop('berg','2')"><span class="rota-num">2</span>Zeus Sunağı Temeli</div>
+          <div class="rota-item" onclick="scrollToStop('berg','3')"><span class="rota-num">3</span>Athena Tapınağı</div>
+          <div class="rota-item" onclick="scrollToStop('berg','4')"><span class="rota-num">4</span>Traianus Tapınağı</div>
+          <div class="rota-item" onclick="scrollToStop('berg','5')"><span class="rota-num">5</span>Akropol Tiyatrosu</div>
+          <div class="rota-item" onclick="scrollToStop('berg','6')"><span class="rota-num">6</span>Agora & Dionysos</div>
+          <div class="rota-item" onclick="scrollToStop('berg','7')"><span class="rota-num">7</span>Orta Kent</div>
+          <div class="rota-item" onclick="scrollToStop('berg','8')"><span class="rota-num">8</span>Kızıl Avlu</div>
+          <div class="rota-item"><span class="rota-num">9</span>Bergama Müzesi</div>
+          <div class="rota-item" onclick="scrollToStop('berg','10')"><span class="rota-num">10</span>Asklepion Girişi</div>
+          <div class="rota-item" onclick="scrollToStop('berg','12')"><span class="rota-num">12</span>Tedavi Kompleksi</div>
+          <div class="rota-item" onclick="scrollToStop('berg','13')"><span class="rota-num">13</span>Tünel & İnkübasyon</div>
+        </div>
+      </div>
+
+      <div class="section" id="berg-akropol">
+        <div class="section-title">I. Akropol</div>
+        <div class="intro-box">
+          <p>Bergama Akropolü, <strong>330 metre</strong> yüksekliğindeki bir kaya zirvesine inşa edilmiştir. Tüm yapılar bu dik yamaca uyum sağlayacak şekilde tasarlanmıştır — tiyatronun 80 dereceye yakın eğimi bu mühendislik zorluğunun en çarpıcı örneğidir.</p>
+        </div>
+        <div class="stop-list">
+
+          <div class="stop-card" id="berg-s1">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">1</div>
+              <div class="stop-name-text">Akropol — Giriş & Oryantasyon</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Akropol'e günümüzde teleferik (telekabinle) ya da araçla çıkılmaktadır. Antik dönemde ise dik yollar ve basamaklarla tırmanılırdı; bu zaten gücün sembolik bir ifadesiydi. Tepeye çıkan herkes Bergama'nın egemenliğini fiziksel olarak hissederdi.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Teleferikten görülen panorama: Bergama ovası, Selinos ve Ketios nehirleri ile antik kentin tüm katmanları bir arada.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s2">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">2</div>
+              <div class="stop-name-text">Zeus Sunağı Temeli</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MÖ 2. yüzyılda inşa edilen Zeus Sunağı, Bergama Krallığı'nın Galat zaferlerini kutlamak için yaptırılan anıtsal bir yapıdır. Orijinal sunak 19. yüzyılda Alman arkeolog Carl Humann tarafından sökülerek Berlin'e taşındı — bugün <strong>Berlin Pergamon Müzesi</strong>'nde sergilenmektedir. Yerinde yalnızca temel kalmıştır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Vahiy Kitabı'nda Bergama için "Şeytan'ın tahtının bulunduğu yer" denir — teologlar bunun Zeus Sunağı'na atıf olduğunu düşünür.</li>
+                <li>Berlin Pergamon Müzesi dünyanın en çok ziyaret edilen müzelerinden biri; ana çekim merkezi bu sunak.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s3">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">3</div>
+              <div class="stop-name-text">Athena Tapınağı & Kütüphane</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Bergama Kütüphanesi yaklaşık <strong>200.000 rulo</strong> eser barındırıyordu — antik dünyanın İskenderiye'den sonraki en büyük kütüphanesi. Kütüphane, Athena Tapınağı'nın hemen yanında konumlanmıştı: bilgelik tanrıçasının kutsal alanı ile bilginin depolandığı yapı bilinçli olarak yan yana getirilmişti.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Antonius kütüphanenin 200.000 rulunu İskenderiye Kütüphanesi'ne hediye etti — Kleopatra için.</li>
+                <li>Parşömen bu rekabetten doğdu: İskenderiye papirüs ihracını yasaklayınca Bergamalılar hayvan derisi üzerine yazmaya başladı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s4">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">4</div>
+              <div class="stop-name-text">Traianus Tapınağı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 2. yüzyılda İmparator Traianus adına inşa edilen bu tapınak, Akropol'ün en yüksek noktasında yer alır. Korinth düzeninde mermer sütunları ve görkemli platformuyla hem mimari hem de siyasi bir güç gösterisiydi. Kısmen restore edilmiş haliyle bugün hâlâ etkileyicidir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Tapınağın platformundan Bergama ovasının panoramik görünümü: antik dönemde bu manzara gücü görselleştirmenin en etkili yoluydu.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s5">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">5</div>
+              <div class="stop-name-text">Akropol Tiyatrosu</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Antik dünyanın <strong>en dik tiyatrolarından biri</strong> — yaklaşık 10.000 kişi kapasiteli, 80 dereceye yakın bir eğimde yamaca oyulmuştur. Sahnesi geçiciydi: ahşap sahne kurulur, tören bitince kaldırılırdı — böylece tiyatronun panoramik manzarası korunurdu. Oturma sıralarından tüm Bergama ovası görünür.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Tiyatronun bu kadar dik yapılmasının nedeni yer yokluğu değil estetik tercih: seyirci hem oyunu hem de ovayı izlerdi.</li>
+                <li>Bugün bile tiyatronun üst sıralarından Bergama şehri ve çevresinin panoraması görülebilir.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s6">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">6</div>
+              <div class="stop-name-text">Agora & Dionysos Tapınağı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Tiyatronun hemen önünde, uzun ve dar bir teras üzerinde Dionysos Tapınağı bulunur. Tiyatronun önündeki bu konum bilinçlidir: oyun öncesi ve sonrasında şarap tanrısına adak sunulurdu. Agora ise ticaretin, siyasetin ve sosyal yaşamın bir arada döndüğü merkezi alandı.</p>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s7">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">7</div>
+              <div class="stop-name-text">Orta Kent — Roma Agorası & Hamam</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Akropol'den aşağıda, ovada yer alan Roma dönemine ait kent alanı. Hellenistik tepeden farklı olarak Roma kenti düzlükte, ızgara plana göre kurulmuştu. Hamam kompleksi, agora ve sütunlu caddeler Roma şehirciliğinin tipik unsurlarını yansıtır.</p>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s8">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">8</div>
+              <div class="stop-name-text">Kızıl Avlu — Serapis Tapınağı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MS 2. yüzyılda Mısır tanrısı Serapis adına inşa edilen bu anıtsal yapı, tuğladan inşa edilmesi nedeniyle zamanla "Kızıl Avlu" adını almıştır. Bergama ovası boyunca uzanan iki tünel üzerine kurulmuştur — Selinos Nehri yapının altından akmaktadır. Bizans döneminde kiliseye dönüştürülmüştür; bugün caminin yanında yer almaktadır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Vahiy Kitabı'nda Bergama'dan bahsedilmesi bu yapıyla bağlantılı olabilir: Mısır kültü ile Hristiyanlık aynı dönemde bu şehirde yan yanaydı.</li>
+                <li>Yapının altından akan nehir antik mühendisliğin en etkileyici örneklerinden biridir: binlerce ton ağırlıktaki tapınak, akan su üzerine inşa edilmiştir.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section" id="berg-asklepion">
+        <div class="section-title">II. Asklepion — Antik Şifa Merkezi</div>
+        <div class="intro-box">
+          <p>Asklepion, şifa tanrısı Asklepios'a adanmış antik bir sağlık kompleksidir. Bergama Asklepion'u antik dünyanın <strong>en ünlü şifa merkezlerinden biri</strong>; bugünkü Lourdes'un antik dünyadaki karşılığı. Galen (MS 129–216), tıbbın kurucularından sayılan hekim, burada yetişmiştir.</p>
+        </div>
+        <div class="stop-list">
+
+          <div class="stop-card" id="berg-s10">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">10</div>
+              <div class="stop-name-text">Asklepion — Kutsal Yol & Giriş</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Şehir merkezinden Asklepion'a uzanan <strong>820 metre</strong> uzunluğundaki sütunlu kutsal yol (Via Tecta), hastaların komplekse yürüyerek hazırlandıkları ruhsal bir geçiş alanıydı. Yolun iki yanındaki sütunlar ve dükkanlar hem pratik hem sembolik bir işlev taşıyordu.</p>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s11">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">11</div>
+              <div class="stop-name-text">Asklepion Tiyatrosu & Kütüphanesi</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Asklepion'un yaklaşık <strong>3.500 kişi</strong> kapasiteli tiyatrosu tedavinin bir parçasıydı: antik tıp, sanat ve müziği şifa aracı olarak kullanırdı. Kütüphane ise hastaların iyileşme sürecinde zihinlerini meşgul etmeleri için hizmet verirdi.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Antik dönemde müzik ve tiyatro izlemenin tedavi edici olduğuna inanılırdı — modern "sanat terapisi"nin 2.000 yıllık öncülü.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s12">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">12</div>
+              <div class="stop-name-text">Tedavi Kompleksi & Kutsal Pınar</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Asklepion'un tedavi yöntemleri şaşırtıcı derecede çeşitlidir: kutsal pınarın suyuyla ritüel arınma, çamur banyoları, diyet, egzersiz, güneş banyosu, müzik ve rüya yorumu. Hastaların kutsal alanda uyuması (<em>inkübatio</em>) ve rüyalarında tanrıdan şifa bulması inanç temelinin özüydü.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Kutsal pınarın suyunun hafif radyoaktif olduğu modern analizlerle tespit edildi — antik şifa etkisi tesadüf olmayabilir.</li>
+                <li>Galen burada başladı: daha sonra Roma imparatorlarının özel hekimi oldu, tıp kitapları 1.500 yıl ders kitabı olarak kullanıldı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="berg-s13">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">13</div>
+              <div class="stop-name-text">Tünel & İnkübasyon Odaları</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Asklepion'un en gizemli bölümü: yeraltına inen yaklaşık <strong>80 metre</strong> uzunluğundaki tünel. Hastalar bu tünelde yatarak uyurlardı; tanrının rüyada görünmesi şifanın başlangıcı sayılırdı. Tünelin iki yanındaki küçük nişler ve odalar inkübasyon (kutsal uyku) için tasarlanmıştır. Karanlık, dar ve sessiz ortam rüya görmeyi kolaylaştırmak için bilinçli olarak tasarlanmıştır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Modern psikoloji açısından: karanlık, sessiz, kapalı alan + ritüel beklenti + yorgunluk = yoğun rüya deneyimi. Asklepion bunu binlerce yıl önce sistematik olarak kullanıyordu.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ PRİENE · MİLET · DİDİM ═══════════ -->
+  <div class="page" id="page-pmd">
+    <div class="cat-header">
+      <h2>🔱 Priene · Milet · Didim</h2>
+      <p>Ege'nin Üç Büyük Antik Kenti · Tek Günlük Tur · ~4.5–5 saat toplam</p>
+    </div>
+    <div class="cat-body">
+
+      <div class="section" id="pmd-intro">
+        <div class="section-title">Genel Bakış</div>
+        <div class="intro-box">
+          <p>Bu üç kent birbirini tamamlar: <strong>Priene</strong> demokrasinin planlanmış şehri, <strong>Milet</strong> "kökü olmayan şehir olamaz"ın canlı ispatı, <strong>Didim</strong> ise tanrı ile insanın buluştuğu eşiktir.</p>
+          <p>Sıralama önemlidir: önce Priene (tepede, kompakt), ardından Milet (ova, büyük şehir), son olarak Didim (Apollon tapınağı, en etkileyici final).</p>
+        </div>
+      </div>
+
+      <!-- PRİENE -->
+      <div class="section" id="pmd-priene">
+        <div class="section-title">I. Priene</div>
+        <div class="intro-box">
+          <p>MÖ 4. yüzyılda Mykale Dağı'nın eteklerine sıfırdan tasarlanan şehir. Mimar Pytheos birbirine tam dik kesen sokaklar, merkezi kutsal alanlar, agora, gymnasium ve tiyatroyu önceden planladı. Bu <strong>Hippodamik sistem</strong>, Manhattan'ın sokak ızgarasından modern belediye planlamasına kadar uzanan soy ağacının ta köküdür.</p>
+          <p>Priene hiçbir zaman büyümedi: nüfusu <strong>4.000–5.000</strong> ile sınırlı kaldı. Ama bu küçüklük onu korudu — büyük Roma yeniden yapımlarına uğramadığı için Hellenistik şehir dokusunu neredeyse saf haliyle korudu.</p>
+        </div>
+        <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+          <li>Büyük İskender Priene'yi ziyaret etti ve Athena Tapınağı'nın yapımına bağışta bulundu. Kapı sövesineki yazıt bugün British Museum'dadır.</li>
+          <li>Priene'nin bazı sokakları çok dik olduğundan merdivenle aşılır — dünyada merdivenli sokakları olan sayılı antik kentlerden biri.</li>
+        </ul></div>
+        <div class="stop-list" style="margin-top:16px">
+
+          <div class="stop-card" id="pmd-sP3">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">P3</div>
+              <div class="stop-name-text">Athena Tapınağı — Büyük İskender'in Armağanı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>MÖ 334'te Büyük İskender'in bağışıyla inşaatı başlayan Athena Polias Tapınağı, döneminin en önemli İyonik tapınaklarından biridir. Mimar Pytheos tarafından tasarlanan yapı, Vitruvius'un <em>De Architectura</em> adlı mimarlık kanonunda örnek yapı olarak gösterilir. Bugün beş sütunu ayaktadır.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>İskender'in bağış yazıtı: "Kral İskender bu tapınağı Athena Polias'a adadı" — orijinal yazıt bugün British Museum'da.</li>
+                <li>Pytheos aynı zamanda Halikarnas Mozolesi'nin (Dünyanın 7 Harikası) mimarıdır.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="pmd-sP4">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">P4</div>
+              <div class="stop-name-text">Bouleuterion — Meclis Binası</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Priene Bouleuterion'u antik dünyanın en iyi korunmuş meclis binalarından biridir. Yaklaşık <strong>640 kişi</strong> kapasiteli olan yapı, demokratik toplantı için tasarlanmış mükemmel bir akustik mimariye sahiptir. Oturma sıraları at nalı formunda; merkezde sunak, etrafında kademeli basamaklar.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Priene'nin nüfusu 4.000–5.000 iken meclis kapasitesi 640 kişi — demek ki yetişkin erkek nüfusun büyük çoğunluğu demokratik sürece katılırdı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="pmd-sP5">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">P5</div>
+              <div class="stop-name-text">Tiyatro</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Yaklaşık <strong>5.000 kişi</strong> kapasiteli Priene Tiyatrosu, Hellenistik tiyatro mimarisinin en saf örneklerinden biridir. Özellikle dikkat çekici unsur: ön sıralardaki <strong>beş taş koltuk</strong> — onursal koltuklar; kentin önde gelen vatandaşları ve misafir onurlarına ayrılmış özel yerler.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Taş koltuklara kazınmış isimler hâlâ okunabiliyor — 2.400 yıl önce bu koltuklarda kimin oturduğunu biliyoruz.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MİLET -->
+      <div class="section" id="pmd-milet">
+        <div class="section-title">II. Milet</div>
+        <div class="intro-box">
+          <p>Milet, antik dünyanın en önemli liman ve ticaret kentlerinden biriydi. <strong>Thales, Anaximandros, Anaximenes</strong> — Batı felsefesinin ilk üç düşünürü Miletliydi. "Her şeyin özü nedir?" sorusunu ilk kez bu şehirde sordular. Bugün Milet denizden kilometrelerce uzakta — liman alüvyonla doldu.</p>
+        </div>
+        <div class="stop-list" style="margin-top:16px">
+
+          <div class="stop-card" id="pmd-sM2">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">M2</div>
+              <div class="stop-name-text">Büyük Tiyatro</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Milet'in en etkileyici yapısı: yaklaşık <strong>15.000 kişi</strong> kapasiteli dev tiyatro. Hellenistik dönemde başlanmış, Roma döneminde üç katlı sahne binası eklenerek tamamlanmıştır. Sahne binasının mimarisi döneminin en görkemli örneklerinden biridir. Bizans döneminde tiyatronun üst bölümüne bir kale inşa edilmiştir — izleri hâlâ görülebilir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Tiyatrodaki bir sıraya "Yahudilerin ve Tanrı'ya saygı duyanların yeri" yazılmış — MS 1. yüzyılda Milet'in ne kadar çok kültürlü olduğunun kanıtı.</li>
+                <li>Aziz Pavlus Milet'te konuşma yapmıştır (Elçilerin İşleri 20): Efes kilise liderlerini veda konuşması için buraya çağırdı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="pmd-sM3">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">M3</div>
+              <div class="stop-name-text">Delphinion — Apollon'un Kutsal Alanı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Delphinion, "yunusların tanrısı" Apollon Delphinios'a adanmış kutsal alandır. Milet'in dini ve sivil yaşamının merkezi; burada antlaşmalar imzalanır, adaklar sunulur, şehrin önemli kararları tanrının huzurunda alınırdı. Kutsal Yol'un başlangıç noktasıdır — buradan yılda bir kez Didim'deki Apollon Tapınağı'na dini alay yürüyüşü yapılırdı.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Milet'ten Didim'e uzanan Kutsal Yol yaklaşık 18 km — her yıl bu yolda düzenlenen dini alay Anadolu'nun en büyük dini törenlerinden biriydi.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DİDİM -->
+      <div class="section" id="pmd-didim">
+        <div class="section-title">III. Didim — Apollon Tapınağı</div>
+        <div class="intro-box">
+          <p>Didim, Apollon'un kehanet tapınağının bulunduğu kutsal şehir. Didyma Tapınağı antik dünyanın en büyük tapınaklarından biridir: <strong>122 adet sütunu</strong> olan dev yapı, birden fazla nesil boyunca inşa edilmiş, hiçbir zaman tam olarak tamamlanamamıştır. Delphi'den sonra antik dünyanın en önemli ikinci kehanet merkeziydi.</p>
+        </div>
+        <div class="stop-list" style="margin-top:16px">
+
+          <div class="stop-card" id="pmd-sD3">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">D3</div>
+              <div class="stop-name-text">Pronaos — Sütunlar Ormanı</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Tapınağın ön bölümü olan pronaos, iki sıra halinde dizilmiş devasa İyonik sütunlarla çevriliydi. Bugün ayakta duran sütunlar bile ziyaretçileri ezici bir büyüklükle karşılar. Her sütun yaklaşık <strong>19,7 metre</strong> yüksekliğinde ve 2 metre çapındadır. Sütunların tabanlarındaki Medusa kabartmaları ve rozetler en çarpıcı dekoratif öğelerdir.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Sütunların bazı tamburları hiç yerinden kaldırılmamış: 2.300 yıl önce şantiyede bırakıldıkları gibi bugün hâlâ toprakta yatıyorlar.</li>
+                <li>Tapınak hiç tamamlanamadı — yaklaşık 600 yıl boyunca süren inşaat her nesil tarafından devralındı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="pmd-sD4">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">D4</div>
+              <div class="stop-name-text">Adyton — İç Avlu & Kutsal Pınar</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Tapınağın kutsal iç avlusu olan adyton, gökyüzüne açık devasa bir avludur. Burada <strong>kutsal defne ağacı</strong> ve <strong>kutsal pınar</strong> bulunurdu. Prophanitis adı verilen kadın kâhin, pınarın suyunu içerek veya buharını soluyarak transa geçer ve Apollon'un kehanetini iletirdi. Sıradan halk adytona giremezdi.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Pınarın suyunun psikotropik etkisi olduğu hipotezi araştırılmaktadır: Delphi'de de benzer jeolojik gaz çıkışları saptanmıştır.</li>
+                <li>Kehanet ticareti büyüktü: Milet, Lidya, Mısır gibi krallıklar Didim'e değerli adaklar gönderirdi — Kral Kroisos'un altın adakları bunlar arasındaydı.</li>
+              </ul></div>
+            </div>
+          </div>
+
+          <div class="stop-card" id="pmd-sD5">
+            <div class="stop-head" onclick="tog(this.parentElement)">
+              <div class="stop-n">D5</div>
+              <div class="stop-name-text">Kehanet Odası & Tünel Koridor</div>
+              <span class="stop-toggle">▼</span>
+            </div>
+            <div class="stop-body">
+              <p>Prophanitis'in transa girdikten sonra kehaneti ilettiği küçük ve kapalı oda, pronaos ile adyton arasında iki paralel tonozlu <strong>tünel koridorla</strong> bağlıdır. Bu karanlık, dar tüneller kehanetin gizemini artırmak için tasarlanmıştır — hacılar bu tünellerden geçerek adytona girerlerdi.</p>
+              <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+                <li>Büyük İskender Gordion Düğümü'nü kesmeden önce Didim kehanetine danıştığı söylenir.</li>
+                <li>MS 303'te Diocletianus Hristiyanlara zulüm emrini Didim kehanetine dayandırdı — "tanrı bunu emretti" dedi.</li>
+              </ul></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+  <!-- ═══════════ TÜRKİYE TARİHİ ═══════════ -->
+  <div class="page" id="page-tarih">
+    <div class="cat-header">
+      <h2>🇹🇷 Türkiye Tarihi</h2>
+      <p>Prehistorik'ten Cumhuriyet'e · Otobüste Anlatım Notları · 10.000+ Yıllık Kesintisiz Medeniyet</p>
+    </div>
+    <div class="cat-body">
+
+      <!-- GİRİŞ -->
+      <div class="section" id="tarih-giris">
+        <div class="section-title">Genel Bakış — Neden Anadolu?</div>
+        <div class="intro-box">
+          <p>Anadolu, insanlık tarihinin en yoğun biçimde yazıldığı coğrafyadır. Neolitik köylerden Roma şehirlerine, Bizans kiliselerinden Osmanlı camilerine kadar her taş bir öncekinin üstüne konulmuştur. Burada hiçbir şey sıfırdan başlamadı — her medeniyet bir öncekinin mirasını devraldı, dönüştürdü ve aktardı.</p>
+          <p>Türkiye bugün <strong>dünyanın 7 harikasından 2'sine</strong> ev sahipliği yapmış topraklara sahip (Artemis Tapınağı ve Halikarnas Mozolesi). <strong>UNESCO Dünya Mirası</strong> listesinde 21 alanıyla dünyanın en zengin ülkelerinden biri. İstanbul ise tarihte <strong>3 ayrı imparatorluğun</strong> başkenti olan tek şehirdir.</p>
+        </div>
+        <div class="detail-box"><div class="detail-label">🚌 Otobüste Kullan</div><ul>
+          <li>"Şu an üzerinden geçtiğimiz topraklar 10.000 yıldır kesintisiz iskân görüyor — dünyanın başka hiçbir yerinde bu kadar katmanlı bir tarih yok."</li>
+          <li>"Gördüğünüz her antik taş bir önceki medeniyetten devralınmış — Romalılar Yunan taşlarını kullandı, Bizanslılar Roma yapılarını kiliseye çevirdi, Osmanlılar üstüne cami yaptı."</li>
+        </ul></div>
+      </div>
+
+      <!-- 1. PREHİSTORİK -->
+      <div class="section" id="tarih-prehistorik">
+        <div class="section-title">1. Prehistorik & Anadolu Uygarlıkları (MÖ 10.000 – MÖ 300)</div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">1.1</div>
+            <div class="stop-name-text">Çatalhöyük — Dünyanın İlk Şehri (MÖ 7500–5700)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Konya yakınlarındaki Çatalhöyük, dünyanın bilinen <strong>en eski şehir yerleşimi</strong>dir. MÖ 7500'e tarihlenen bu yerleşimde yaklaşık <strong>8.000 kişi</strong> yaşıyordu — dönemine göre dev bir nüfus. Sokak yoktu; evler birbirine bitişik inşa edilmiş, girişler çatıdaki deliklerden merdivenle sağlanıyordu. Duvarlar renkli fresklerle, boğa başları ve kadın figürleriyle süslüydü.</p>
+            <p>Burada bulunan <strong>Ana Tanrıça heykelcikleri</strong> insanlığın bilinen en eski dini figürlerindendir. Doğurganlık ve bereketin sembolü olan bu figür binlerce yıl sonra Efes Artemis'inde, ondan sonra Meryem Ana'da yeniden karşımıza çıkar — inanç değişir, ihtiyaç değişmez.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Çatalhöyük'te ölüler evin içine, döşemenin altına gömülürdü — ataların evin bir parçası olduğuna inanılırdı.</li>
+              <li>Burada obsidyen (volkanik cam) ticareti yapılıyordu: Anadolu dünyanın ilk uzun mesafeli ticaret ağlarından birinin merkezindeydi.</li>
+              <li>Ana Tanrıça → Kibele → Artemis → Meryem Ana: 10.000 yıllık kesintisiz bir inanç zinciri, hep Anadolu'da.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Çatalhöyük'teki insanlar çatıdan eve giriyordu — sokak yoktu, komşunun çatısından atlayarak ziyarete gidiyordu."</li>
+              <li>"Evlerinde ölen atalarını döşemenin altına gömdüler — sabah kalktıklarında büyükannelerinin üzerinde yürüyorlardı."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">1.2</div>
+            <div class="stop-name-text">Hititler — Anadolu'nun İlk İmparatorluğu (MÖ 1800–1200)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Hititler, Anadolu'nun ilk büyük imparatorluğunu kurdu. Başkentleri Hattuşa (bugünkü Boğazköy, Çorum yakınları) döneminin en büyük şehirlerinden biriydi. Hititler tarihe iki önemli "ilk" ile geçmiştir: bilinen <strong>ilk yazılı barış antlaşması</strong> ve demir işlemenin yaygınlaşması.</p>
+            <p>MÖ 1274'teki <strong>Kadeş Muharebesi</strong>'nde Mısır firavunu II. Ramses ile Hitit Kralı III. Hattuşili karşılaştı. Antik tarihin en büyük savaş arabası çarpışması olan bu muharebeden sonra imzalanan antlaşma, bugün BM binasında sergilenmektedir. Dünyanın ilk belgeli diplomasisi.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Kadeş Antlaşması'nın kopyası BM Genel Merkezi'nin duvarında asılı — "insanlığın ilk barış belgesi" olarak.</li>
+              <li>Hititler MÖ 1200'de Deniz Kavimleri göçüyle aniden çöktü — bu gizemli göç Bronz Çağı'nı sona erdirdi, Miken, Ugarit ve Mısır'ı da sarstı.</li>
+              <li>Hitit hiyeroglifi 20. yüzyıla kadar çözülemedi — dili Hintçeyle akraba çıkınca dilbilimciler şoke oldu.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Türkiye'nin topraklarında yazılan ilk barış antlaşması bugün New York'ta BM binasında asılı duruyor."</li>
+              <li>"3.300 yıl önce bu topraklarda iki süper güç savaştı ve tarihinin ilk diplomatik anlaşmasını imzaladı."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">1.3</div>
+            <div class="stop-name-text">Frigyalılar, Lidyalılar & İyonyalılar (MÖ 1200–500)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p><strong>Frigyalılar:</strong> Hitit çöküşünden sonra iç Anadolu'ya yerleşti. Kral Midas efsanesi Frigya kökenlidir — "dokunduğunu altına çeviren" kral gerçek bir tarihi figürdür. Gordion'daki Gordios Düğümü de Frigya geleneğidir: "Bu düğümü çözen Asya'ya hükmedecek" kehanetini Büyük İskender kılıçla çözdü.</p>
+            <p><strong>Lidyalılar:</strong> Batı Anadolu'da kurulu Lidya Krallığı insanlığa <strong>madeni parayı</strong> hediye etti (MÖ 7. yüzyıl). Zenginliğiyle efsaneleşen Kral Kroisos bir Lidyalıydı. "Kroisos kadar zengin" deyimi bugün hâlâ kullanılır.</p>
+            <p><strong>İyonyalılar:</strong> Ege kıyılarına yerleşen Yunan koloniciler burada Batı medeniyetinin temellerini attı. Thales, Herakleitos, Anaximandros — felsefenin ilk düşünürleri hepsi bu kıyılardandı. "Her şeyin özü nedir?" sorusu ilk kez İyonya'da soruldu.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Dünyada ilk madeni para MÖ 650 civarında Lidya'da basıldı — elektrum (altın-gümüş alaşımı) sikke. Paranın icadı burada.</li>
+              <li>Büyük İskender Gordion Düğümü'nü çözmek yerine kılıcıyla kesti — "düğümü çözmenin tek yolu bu" dedi. Tarihin en ünlü lateral thinking örneği.</li>
+              <li>Thales MÖ 585'te güneş tutulmasını önceden hesapladı — bilim tarihinin ilk kesin tarihli tahmini.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Cebinizdeki para, kredi kartınız — hepsi bu topraklarda icat edildi. Dünyanın ilk madeni parasını Lidyalılar bastı."</li>
+              <li>"Gordion Düğümü deyimini duydunuz mu? 'İskender gibi çöz' denir ya — işte o İskender, işte o düğüm, Türkiye'de."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">1.4</div>
+            <div class="stop-name-text">Büyük İskender & Hellenistik Dönem (MÖ 334–30)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>MÖ 334'te Makedonya Kralı Büyük İskender, Anadolu'ya geçti. Sadece <strong>13 yılda</strong> Yunanistan'dan Hindistan'a uzanan devasa bir imparatorluk kurdu. Öldüğünde 32 yaşındaydı. Gittiği her yerde Yunan kültürünü yaydı — bu sürece <strong>Helenizm</strong> denir.</p>
+            <p>İskender'in en kalıcı mirası kültürel: Yunanca ortak dil oldu, Yunan mimarisi her yere yayıldı, felsefe ve bilim filizlendi. Efes'teki Celsus Kütüphanesi'nde Yunanca okumak, Bergama'da Yunanca tiyatro seyretmek — bunlar İskender'in mirasıdır.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>İskender Efes'e girdiğinde Artemis Tapınağı yangından yeni çıkmıştı — "Seni tanrı ilan ederim" teklifini "Tanrılar birbirini tanrılaştırmaz" diyerek reddetti.</li>
+              <li>İncil'in Yunanca yazılmasının nedeni İskender'dir: yaydığı ortak dil sayesinde Hristiyanlık tüm Akdeniz'e yayılabildi.</li>
+              <li>İskender öldüğünde generalleri imparatorluğu paylaştı — Anadolu'ya düşen pay Seleukos ve ardından Bergama Krallığı oldu.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"32 yaşında ölen bir adam İngiltere'den Hindistan'a kadar her yere Yunanca yaydı — bugün İncil Yunanca diye bu yüzden var."</li>
+              <li>"İskender buralarda yürüdü, bu tapınakları gördü, bu caddelerde at sürdü — 2.350 yıl önce."</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. YUNAN & ROMA -->
+      <div class="section" id="tarih-yunan">
+        <div class="section-title">2. Yunan & Roma Dönemi (MÖ 500 – MS 395)</div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">2.1</div>
+            <div class="stop-name-text">Roma'nın Anadolu'ya Gelişi & Asia Eyaleti</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>MÖ 133'te Bergama Kralı III. Attalos krallığını vasiyetle Roma'ya bıraktı. Böylece Anadolu'nun büyük bölümü <strong>Roma Asia Eyaleti</strong> oldu — savaş olmadan, tek bir ok atılmadan. Efes başkent seçildi ve kısa sürede imparatorluğun en zengin şehirlerinden biri haline geldi.</p>
+            <p>Roma döneminde Anadolu olağanüstü gelişti: binlerce kilometre yol, su kemerleri, tiyatrolar, hamamlar. Roma yalnızca askeri güç değil, mühendislik mucizesiydi. <strong>Pax Romana</strong> (Roma Barışı) döneminde Anadolu'da 200 yıl boyunca büyük savaş yaşanmadı.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Romalılar Anadolu'dan o kadar çok vergi topladı ki imparatorluğun kasasının yarısı Asia eyaletinden geliyordu.</li>
+              <li>Roma yolları o kadar iyi yapılmıştı ki bazıları hâlâ kullanılmakta — modern Türkiye yollarının bir kısmı Roma güzergahlarını izler.</li>
+              <li>Sezar MÖ 47'de Pontus Kralı'nı yendikten sonra "Veni, vidi, vici" (Geldim, gördüm, yendim) dedi — bu savaş Anadolu'daydı, Zile/Tokat yakınları.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Veni, vidi, vici — Geldim, gördüm, yendim. Sezar bunu Türkiye'de, Tokat yakınlarında söyledi."</li>
+              <li>"Roma imparatorluğunun en zengin eyaleti bugünkü Türkiye'ydi. İtalya'dan daha çok vergi geliyordu buradan."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">2.2</div>
+            <div class="stop-name-text">Hristiyanlığın Doğuşu & Anadolu (MS 1–4. yüzyıl)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Hristiyanlık Filistin'de doğdu ama <strong>Anadolu'da büyüdü</strong>. Aziz Pavlus üç büyük misyoner yolculuğunda Anadolu'yu baştan başa geçti; Efes, Antakya, Konya, Tarsus'ta cemaatler kurdu. İncil'deki mektupların büyük çoğunluğu Anadolu şehirlerine yazılmıştır.</p>
+            <p>Vahiy Kitabı'ndaki "yedi kilise"nin tamamı bugünkü Türkiye'dedir: Efes, İzmir, Bergama, Thyateira (Akhisar), Sardes (Sart), Filadelfiya (Alaşehir) ve Laodikya (Denizli). <strong>Erken Hristiyanlığın kalbi Anadolu'ydu.</strong></p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Aziz Pavlus Tarsus'lu (bugünkü Mersin) bir Romalı vatandaşıydı — Romalı kimliğini en zor anlarda kalkan olarak kullandı.</li>
+              <li>MS 325'te İznik (Nikea) Konsülü: Hristiyanlığın temel inanç esasları bugünkü Türkiye'de, İznik'te belirlendi.</li>
+              <li>Noel Baba'nın gerçek ismi Aziz Nikolaos — Myra'lı (bugünkü Demre, Antalya). Noel Baba Türk topraklarında doğdu ve yaşadı.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Noel Baba gerçek bir kişiydi ve Türkiye'de yaşadı — Demre'de, Antalya yakınlarında. Her yıl milyonlarca çocuğun beklediği adam aslında bir Anadoluluydu."</li>
+              <li>"Hristiyanlığın inanç esasları Türkiye'de yazıldı — İznik Konsülü'nde. Kilisede okunan Nicene Creed, İznik'ten geliyor."</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. BİZANS -->
+      <div class="section" id="tarih-bizans">
+        <div class="section-title">3. Bizans Dönemi (MS 395–1453)</div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">3.1</div>
+            <div class="stop-name-text">Bizans İmparatorluğu — Doğu Roma'nın 1.000 Yılı</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>MS 395'te Roma İmparatorluğu ikiye bölündü. Batı Roma 476'da çöktü; ama Doğu Roma — yani <strong>Bizans İmparatorluğu</strong> — tam <strong>1.058 yıl</strong> daha ayakta kaldı. Başkentleri Konstantinopolis (bugünkü İstanbul) döneminin tartışmasız en büyük şehriydi.</p>
+            <p>Bizans'ın en büyük mirası Hristiyan kültürünü ve antik bilgiyi korumasıdır. Avrupa karanlık çağlara girerken Konstantinopolis'te felsefe, matematik ve tıp çalışmaları sürdü. Batı Avrupa'nın sonradan yaşadığı Rönesans'ı besleyen bilgi büyük ölçüde Bizans kanalıyla geldi.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Bizans terimi aslında 19. yüzyılda uydurulmuştur — Bizanslılar kendilerini her zaman "Romalı" olarak tanımladı.</li>
+              <li>Konstantinopolis 1.000 yıl boyunca Avrupa'nın en büyük şehriydi — nüfusu zirve döneminde 500.000'e ulaştı.</li>
+              <li>Bizans'ın "Grek Ateşi" silahı: denizde yanmayı sürdüren kimyasal bileşim — formülü hâlâ tam olarak bilinmemektedir.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Batı Roma çöktüğünde Avrupa karanlığa gömüldü. İstanbul ise 1.000 yıl daha ışığını söndürmedi — Platon burada okunmaya devam etti."</li>
+              <li>"İstanbul, Roma'dan önce başkent, Roma döneminde başkent, Bizans döneminde başkent, Osmanlı döneminde başkent. Dünyanın başka hiçbir şehri bu rekoru tutamaz."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">3.2</div>
+            <div class="stop-name-text">Justinianus & Ayasofya (MS 527–565)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>İmparator Justinianus Bizans'ın en parlak dönemini yaşattı. Roma hukukunu derledi (<em>Corpus Juris Civilis</em> — bugünkü Avrupa hukukunun temeli), kaybedilen toprakları geri aldı ve en büyük eserini verdi: <strong>Ayasofya</strong>.</p>
+            <p>MS 537'de tamamlanan Ayasofya, <strong>1.000 yıl boyunca</strong> dünyanın en büyük kubbeli yapısı olarak kaldı. Justinianus açılışta "Süleyman, seni geçtim!" dedi. Yapım tekniği o kadar ileriydi ki mühendislerin nasıl yaptığı hâlâ tam anlaşılamamıştır.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Ayasofya'nın kubbesi bugün hâlâ dünyanın en büyük tuğla kubbelerinden biri.</li>
+              <li>Justinianus aynı zamanda Bergama'daki St. John Bazilikası'nı ve Sinai'deki St. Catherine Manastırı'nı yaptırdı — dünyanın dört bir yanına miras bıraktı.</li>
+              <li>Ayasofya'da kullanılan mermerler Anadolu, Yunanistan ve Mısır'dan getirildi — imparatorluğun tüm taşı tek çatı altında.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Ayasofya'nın kubbesi tamamlandığında Justinianus içeri girdi ve 'Süleyman, seni geçtim!' diye bağırdı — 1.500 yıl önce."</li>
+              <li>"1.000 yıl boyunca dünyanın en büyük kubbesi İstanbul'daydı. Floransa'daki Duomo ancak 1436'da onu geçebildi."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">3.3</div>
+            <div class="stop-name-text">1453 — İstanbul'un Fethi</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>29 Mayıs 1453'te 21 yaşındaki Osmanlı Sultanı II. Mehmed (Fatih), 53 günlük kuşatmanın ardından Konstantinopolis'i aldı. Bu tarih Avrupa'da <strong>Orta Çağ'ın sonu</strong> olarak kabul edilir. Bizans'ın düşmesiyle Avrupa'ya kaçan Bizanslı akademisyenler Rönesans'ı tetikledi.</p>
+            <p>Fatih, şehre girdikten sonra Ayasofya'ya gitti, eğildi ve alnını toprağa koydu, ardından minber kurdu. Kendisini yalnızca Osmanlı sultanı değil, <strong>Roma'nın varisi (Kayser-i Rum)</strong> ilan etti.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Fatih gemileri karadan yürüttü: Boğaz'ı geçemeyen gemileri Galata tepelerinden Haliç'e taşıttı — 72 gemi, geceleri, gizlice.</li>
+              <li>Son Bizans İmparatoru XI. Konstantinos cesedi hiç bulunamadı — efsaneye göre mermer oldu, şehrin altında uyuyor ve bir gün geri dönecek.</li>
+              <li>1453 fethi Avrupa'yı o kadar sarstı ki Rönesans'ı hızlandırdı: Konstantinopolis'ten kaçan akademisyenler eski Yunan metinlerini İtalya'ya taşıdı.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"21 yaşında bir genç 1.000 yıllık imparatorluğu yıktı — Fatih Sultan Mehmed tarihin en erken başarıya ulaşmış komutanlarından biri."</li>
+              <li>"Gemileri karadan yürüttü — geceleri, gizlice. Sabah Bizanslılar uyandığında Haliç'te Osmanlı donanması vardı."</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. SELÇUKLU -->
+      <div class="section" id="tarih-selcuklu">
+        <div class="section-title">4. Selçuklu Dönemi (1071–1308)</div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">4.1</div>
+            <div class="stop-name-text">Malazgirt & Anadolu'nun Kapıları (1071)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>26 Ağustos 1071'de Sultan Alparslan, Malazgirt'te Bizans İmparatoru Romanos Diogenes'i yendi ve esir aldı. Bu savaş Türklerin Anadolu'ya kapısını açtı. Tarihçiler bu tarihi <strong>Türkiye'nin başlangıcı</strong> olarak kabul eder.</p>
+            <p>İlginç olan: Alparslan esir imparatoru öldürmedi, fidye alarak serbest bıraktı. İmparatora muamele o dönem için son derece medeni sayılırdı. Savaştan önce "Kaç veya savaş, seçim senin" dedi — imparator savaşı seçti ve kaybetti.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Alparslan savaşa 15.000 kişiyle girdi, Bizans ordusunun 200.000 kişi olduğu söylenir — tarihin en ünlü sayısal üstünlük zaferlerinden biri.</li>
+              <li>Malazgirt'ten sonra Türkler yalnızca asker olarak değil, göçerler olarak da Anadolu'ya aktı — demografik dönüşüm böyle başladı.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Türkiye'nin hikayesi 1071'de başlar — bir savaş, bir esir imparator ve açılan bir kapı. Bu topraklar o günden sonra Türklerin yurdu oldu."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">4.2</div>
+            <div class="stop-name-text">Anadolu Selçukluları & Konya (1077–1308)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Büyük Selçuklu'dan ayrılan Anadolu Selçukluları, başkentleri Konya'da parlak bir medeniyet kurdu. <strong>Konya</strong>, döneminin en büyük İslam kültür merkezlerinden biriydi. Burada Mevlana Celaleddin Rumi şiirler yazdı, sema ayinleri düzenlendi, hastaneler, hanlar ve kervansaraylar inşa edildi.</p>
+            <p>Selçuklular Anadolu'ya İslam mimarisini getirdi: çini sanatı, geometrik süsleme, medreseler ve kervansaray ağı. İpek Yolu güzergahı üzerindeki her <strong>40 km'de bir kervansaray</strong> kuruldu — yolcular ücretsiz konaklıyor, yiyip içiyordu.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Mevlana'nın "Ne olursan ol, yine gel" sözü Konya'da yazıldı — 800 yıl sonra hâlâ dünyanın her yerinde alıntılanıyor.</li>
+              <li>Selçuklu kervansarayları dünyanın ilk "otel zinciri" sayılabilir: standart mimari, standart hizmet, standart güzergah — 13. yüzyılda.</li>
+              <li>1243 Kösedağ Savaşı'nda Moğollar Selçukluları yendi — bu yenilgi hem Selçuklu'nun sonunu hem de küçük Türk beyliklerinin (Osmanlı dahil) doğuşunu getirdi.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"800 yıl önce bu yolda kervanlar yürürdü. Her 40 km'de bir kervansaray vardı — tamamen ücretsiz, devlet tarafından finanse edilmiş. Dünyanın ilk otel zinciri."</li>
+              <li>"Mevlana'yı herkes duymuştur — 'Ne olursan ol, yine gel.' Bu sözü yazan adam Konya'da yaşadı, bu topraklarda öldü."</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. OSMANLI -->
+      <div class="section" id="tarih-osmanli">
+        <div class="section-title">5. Osmanlı Dönemi (1299–1922)</div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">5.1</div>
+            <div class="stop-name-text">Küçük Beylikten Dünya İmparatorluğuna (1299–1453)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Osman Bey, 1299'da Söğüt'te küçük bir beylik kurdu. 150 yıl sonra torunları dünyanın en büyük imparatorluklarından birini yönetiyordu. Bu büyüme hızı tarihte eşsizdir. Osmanlı'nın sırrı: <strong>hoşgörü politikası</strong> — fethedilen halkların dinini, dilini ve geleneklerini büyük ölçüde korudu.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Osmanlı'nın "millet sistemi": Rumlar, Ermeniler, Yahudiler kendi dini liderliklerini ve mahkemelerini koruyabildi — modern çokkültürlülüğün öncüsü.</li>
+              <li>1492'de İspanya Yahudileri sürgün ettiğinde Osmanlı sultanı gemiler göndererek onları İstanbul'a taşıttı: "Aptal İspanya beni zengin ediyor."</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"1492'de Kolomb Amerika'yı keşfederken İspanya Yahudileri kovuyordu. Osmanlı sultanı gemiler gönderdi: 'Onları alın, getirin.' Sefarad Yahudileri bugün hâlâ İstanbul'da yaşıyor."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">5.2</div>
+            <div class="stop-name-text">Kanuni Sultan Süleyman & Altın Çağ (1520–1566)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Kanuni Sultan Süleyman, Osmanlı'nın en parlak dönemini yaşattı. <strong>46 yıllık</strong> saltanatında imparatorluk üç kıtaya yayıldı: Viyana kapılarına, Basra Körfezi'ne, Fas'a kadar. Avrupalılar ona "Muhteşem Süleyman" dedi; kendi halkı ise kanunları yüzünden "Kanuni" dedi.</p>
+            <p>Mimar Sinan bu dönemde çalıştı. <strong>Süleymaniye Camii, Selimiye Camii</strong> ve 300'den fazla yapı onun eseri. Sinan kendi deyimiyle "Süleymaniye ile çıraklığımı, Selimiye ile ustalığımı tamamladım."</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Sinan 374 yapı inşa etti — aktif çalışma süresi boyunca yılda ortalama 4 yapı. 99 yıl yaşadı.</li>
+              <li>Kanuni Viyana'yı iki kez kuşattı ama alamadı — bazı tarihçiler "Avrupa'yı kurtaran yağmur" der: her iki kuşatmada da hava Osmanlı'ya karşı döndü.</li>
+              <li>Kanuni'nin 46 yıllık saltanatında Fransa'da 6, İngiltere'de 3 farklı kral hüküm sürdü.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Mimar Sinan 99 yıl yaşadı ve 374 yapı inşa etti. Ölmeden önce 'Selimiye ile ustalığımı tamamladım' dedi — 80'li yaşlarında."</li>
+              <li>"Kanuni'nin saltanatı boyunca Fransa'da 6 kral değişti. O hâlâ oturuyordu."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">5.3</div>
+            <div class="stop-name-text">Osmanlı'nın Mirası & Çöküşü (17.–20. yüzyıl)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>17. yüzyıldan itibaren Osmanlı yavaş yavaş geriledi. Avrupa'da başlayan sanayi devrimi ve milliyetçilik akımları imparatorluğu sarstı. 19. yüzyılda "hasta adam" olarak anılmaya başlandı. <strong>1. Dünya Savaşı</strong>'nda yanlış cepheyi seçen Osmanlı, 1918'de teslim oldu ve toprakları işgale uğradı.</p>
+            <p>Ancak Osmanlı'nın kültürel mirası silinmez: bugünkü Türkiye, Balkanlar, Ortadoğu ve Kuzey Afrika'nın mimari, mutfak, müzik ve hukuk geleneğinde Osmanlı izleri yaşamaya devam eder.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Osmanlı'nın son padişahı VI. Mehmed, 1922'de İngiliz savaş gemisiyle İstanbul'dan ayrıldı — 600 yıllık hanedanın sonu.</li>
+              <li>Osmanlı döneminde İstanbul'un nüfusu Londra ve Paris'i geçiyordu — 16. yüzyılda dünyanın en büyük şehri.</li>
+              <li>Kahve, tulip (lale), yogurt, baklava — bunların hepsi Avrupa'ya Osmanlı kanalıyla ulaştı.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Kahveyi Avrupalılara Osmanlı tanıttı. İstanbul'da 1550'lerde açılan kahvehaneler dünyanın ilk kamuya açık sosyal mekanlarıydı."</li>
+              <li>"Lale Hollanda'nın sembolü ama Avrupa'ya Osmanlı'dan gitti — İstanbul'da yetiştirilip Viyana'ya, oradan Amsterdam'a."</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. CUMHURİYET -->
+      <div class="section" id="tarih-cumhuriyet">
+        <div class="section-title">6. Cumhuriyet Dönemi (1923–Günümüz)</div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">6.1</div>
+            <div class="stop-name-text">Kurtuluş Savaşı & Mustafa Kemal (1919–1923)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>1918'de 1. Dünya Savaşı'nı kaybeden Osmanlı, <strong>Sevr Antlaşması</strong> (1920) ile fiilen parçalandı. İstanbul işgal altındaydı, İzmir'de Yunan kuvvetleri vardı, Doğu Anadolu'da Ermeni ve Kürt devletleri öngörülüyordu. Tarihçiler bu dönemi "ölmekte olan bir imparatorluk" olarak tanımlar.</p>
+            <p>Mustafa Kemal Atatürk, 19 Mayıs 1919'da Samsun'a çıktı ve dağınık direnişi örgütledi. <strong>3 yıllık Kurtuluş Savaşı</strong> sonunda 1923'te Türkiye Cumhuriyeti ilan edildi. Lozan Antlaşması uluslararası alanda tanındı — Sevr'in tam tersine.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Atatürk, 1. Dünya Savaşı'nda Çanakkale'de Mustafa Kemal adıyla tanındı: "Size taarruz etmiyorum, ölmeyi emrediyorum." Bu cümle tarihe geçti.</li>
+              <li>Lozan Antlaşması 24 Temmuz 1923'te imzalandı — bugün Türkiye'nin kurucu belgesi olarak kabul edilir.</li>
+              <li>1923 Türk-Yunan nüfus mübadelesi: 1,2 milyon Rum Türkiye'den, 400.000 Müslüman Yunanistan'dan göç etti. Tarihte en büyük zorunlu nüfus mübadelelerinden biri.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"1920'de Türkiye haritada neredeyse yok gibiydi — topraklar paylaşılmıştı. 3 yılda tablo tamamen değişti. Bu nasıl oldu diye soranlar var."</li>
+              <li>"Atatürk Çanakkale'de şöyle dedi: 'Size taarruz etmiyorum, ölmeyi emrediyorum.' Askerleri durdu — ve dünya tarihi değişti."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">6.2</div>
+            <div class="stop-name-text">Atatürk'ün Reformları (1923–1938)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Mustafa Kemal Atatürk, cumhuriyetin ilanıyla birlikte devrim niteliğinde reformlar hayata geçirdi. <strong>Harf devrimi</strong> (1928): Arap alfabesinden Latin alfabesine geçildi; 3 ayda 15 milyon insan yeni alfabeyi öğrendi. <strong>Takvim</strong>, <strong>ölçü birimleri</strong>, <strong>kıyafet</strong>, <strong>hukuk sistemi</strong> köklü biçimde değiştirildi.</p>
+            <p>Kadınlara seçme ve seçilme hakkı <strong>1934</strong>'te verildi — Fransa'dan 10 yıl, İtalya'dan 12 yıl önce. Atatürk 1938'de hayatını kaybetti; Türkiye'nin başkenti Ankara olan, laik, demokratik cumhuriyet mirasını bıraktı.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Atatürk harf devrimini bizzat köy meydanlarında öğretti — karatahta ve tebeşirle köylülere Latin harflerini anlattı.</li>
+              <li>Türk kadınları 1934'te oy kullandı; Fransız kadınları 1944'te, İtalyan kadınları 1946'da bu hakkı kazandı.</li>
+              <li>Atatürk'ün soyadı kanunla belirlendi: "Ata" (baba) + "Türk" = Türklerin babası.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"Türk kadınları Fransız kadınlarından 10 yıl önce oy kullandı — bunu çok az insan biliyor."</li>
+              <li>"1928'de herkes yeni alfabe öğrendi, 3 ayda. Hayal edin: bir sabah ülkenin tüm tabelaları, gazeteleri, kitapları değişiyor."</li>
+            </ul></div>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">6.3</div>
+            <div class="stop-name-text">Modern Türkiye (1938–Günümüz)</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p>Atatürk'ten sonra Türkiye çok partili demokrasiye geçti (1946), NATO'ya katıldı (1952), Kore Savaşı'na asker gönderdi, Kıbrıs meselesiyle boğuştu, askeri darbeler yaşadı. 1980'lerden itibaren ekonomik büyüme ivmelendi; 2000'lerde Türkiye dünyanın en hızlı büyüyen ekonomilerinden biri oldu.</p>
+            <p>Bugün Türkiye <strong>85 milyonluk</strong> nüfusuyla, iki kıta üzerinde, NATO üyesi, G20 ekonomisi, dünyanın en çok ziyaret edilen ülkeleri arasında yer alan bir ülkedir. İstanbul ise Avrupa'nın <strong>en kalabalık şehridir</strong>.</p>
+            <div class="detail-box"><div class="detail-label">✨ İlginç Detay</div><ul>
+              <li>Türkiye'nin 2 kıtada toprakları var: Trakya (Avrupa) ve Anadolu (Asya). İstanbul aynı anda her iki kıtada da şehir.</li>
+              <li>Türk mutfağı, Fransız ve Çin mutfağıyla birlikte dünyanın "3 büyük mutfağından" biri olarak kabul edilir.</li>
+              <li>Türkiye her yıl yaklaşık 50–60 milyon turist ağırlıyor — nüfusundan daha fazla ziyaretçi.</li>
+            </ul></div>
+            <div class="detail-box" style="background:#f0f8f0;border-color:#8BC34A"><div class="detail-label" style="color:#558B2F">🚌 Otobüste Kullan</div><ul>
+              <li>"İstanbul sabahleyin Asya'da kahvaltı, akşam Avrupa'da akşam yemeği yiyebileceğiniz dünyanın tek şehri. Boğaz geçişi 15 dakika."</li>
+              <li>"Türk mutfağı dünya mutfak tarihinin en önemli üçünden biri — Fransız ve Çin mutfağıyla aynı kategoride."</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTOBÜS ANLATIM NOTLARI -->
+      <div class="section" id="tarih-otobus">
+        <div class="section-title">🚌 Otobüs Anlatım Notları — Hazır Hikayeler</div>
+        <div class="intro-box">
+          <p>Aşağıdaki hikayeler otobüste anlatmak için hazırlanmıştır. Kısa, etkili ve unutulmaz. Her biri bağımsız kullanılabilir.</p>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">Anadolu Neden Özel? — Açılış Anlatımı</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"Şu an oturduğunuz bu otobüs, 10.000 yıldır kesintisiz iskân gören topraklar üzerinde gidiyor. Sağınızda bir tarla görüyorsunuz — o tarlanın altında belki Hitit, belki Roma, belki Bizans kalıntısı var. Türkiye'de her şeyi kazarsanız altında başka bir şey çıkar. Katmanlı bir pasta gibi: en üstte bugün, biraz aşağıda Osmanlı, daha aşağıda Bizans, Roma, Yunan, Hitit, Çatalhöyük... Bu gezide o katmanları birlikte soyacağız."</p>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">Para Nerede İcat Edildi?</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"Cüzdanınızda para var mı? Kredi kartı? Bunların fikri bu topraklarda doğdu. MÖ 650 yılında Lidyalılar — bugünkü Manisa ve İzmir çevresinde yaşayan bir kavim — dünyanın ilk madeni parasını bastı. Elektrum denen altın-gümüş alaşımından küçük diskler. Üstüne aslan başı kazıdılar. İşte o andan itibaren dünya ticareti değişti. Kral Kroisos bu parayla o kadar zenginleşti ki 'Kroisos kadar zengin' deyimi bugün hâlâ kullanılıyor."</p>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">Noel Baba Kimdir?</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"Her yıl milyonlarca çocuk Noel Baba'yı bekler. Peki biliyor muydunuz — Noel Baba gerçek bir kişiydi ve Türkiye'de yaşadı? Gerçek adı Aziz Nikolaos. MS 4. yüzyılda, bugünkü Demre ilçesinde, Antalya yakınlarında yaşadı. Yoksul ailelere gizlice altın sikke bırakmasıyla tanınırdı — geceleri. Zamanla bu hikaye büyüdü, yayıldı, dönüştü ve bugünkü Noel Baba efsanesine ulaştı. Demre'ye giderseniz mezarını görebilirsiniz."</p>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">Kahvenin Yolculuğu</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"Sabah bir fincan kahve içtiniz mi? O fincan kahvenin hikayesi Osmanlı'dan geçiyor. Kahve Etiyopya'dan Yemen'e, oradan İstanbul'a geldi. 1554'te İstanbul'da dünyanın ilk kamuya açık kahvehaneleri açıldı. İnsanlar burada satranç oynadı, sohbet etti, gazete okudu, politika yaptı. Bir asır sonra Venedikli tüccarlar bu içeceği Avrupa'ya taşıdı. Bugün Starbucks'ta içtiğiniz o latte, Osmanlı kahvehanesinin torunudur."</p>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">Gemileri Karadan Yürüttü</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"1453. 21 yaşında bir sultan, 1.000 yıllık bir imparatorluğu yıkmaya çalışıyor. Boğaz'ı geçemiyordu — Bizans zincirle kapatmıştı. Ne yaptı biliyor musunuz? Gemileri karadan yürüttü. Galata tepelerini yağlayarak 72 gemiyi geceleri sessizce Haliç'e indirdi. Sabah Konstantinopolis'in savunucuları uyandığında, denizden güvende olduklarını sandıkları tarafta Osmanlı donanması vardı. Şehir üç gün içinde düştü."</p>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">1.000 Yılı Geçen Yapı: Ayasofya</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"Ayasofya'nın kubbesi tamamlandığında İmparator Justinianus içeri girdi ve sesini yükseltti: 'Süleyman, seni geçtim!' O günden itibaren tam 1.000 yıl boyunca — bir milenyum — dünyanın hiçbir yapısı bu kubbeyi geçemedi. Floransa'daki ünlü Duomo ancak 1436'da bu rekoru kırabildı. Bugün İstanbul'a gittiğinizde o kubbenin altında durduğunuzda bunu hatırlayın: 537 yılında başlayan bir mucize, 1.500 yıl sonra hâlâ ayakta."</p>
+          </div>
+        </div>
+
+        <div class="stop-card">
+          <div class="stop-head" onclick="tog(this.parentElement)">
+            <div class="stop-n">🎤</div>
+            <div class="stop-name-text">Barışın İlk Belgesi</div>
+            <span class="stop-toggle">▼</span>
+          </div>
+          <div class="stop-body">
+            <p style="font-style:italic;color:#5a4a2a;border-left:3px solid #c9a227;padding-left:12px;">"New York'ta BM binasının duvarında bir belge asılı: 'İnsanlığın ilk barış antlaşması' yazıyor altında. Bu belge MÖ 1259'da, bugünkü Türkiye topraklarında imzalandı. Hitit Kralı ile Mısır Firavunu II. Ramses, tarihin en büyük savaş arabası çarpışmasından sonra barış masasına oturdu. 'Bir daha savaşmayacağız, birbirimizi koruyacağız' dediler. 3.300 yıl önce. Bugün o anlaşmanın kopyası BM'nin koridorunda asılı duruyor."</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+<!-- Lightbox -->
+<div id="lb" onclick="closeLb()">
+  <span id="lb-x">✕</span>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('mob-open');
+}
+
+function toggleCat(id) {
+  const sub = document.getElementById('sub-' + id);
+  if (!sub) return;
+  // Close others
+  document.querySelectorAll('.sidebar-sub').forEach(s => {
+    if (s !== sub) s.classList.remove('open');
+  });
+  sub.classList.toggle('open');
+}
+
+function tog(card) {
+  card.classList.toggle('open');
+}
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+}
+
+function scrollToStop(page, num) {
+  showPage(page);
+  const el = document.getElementById(page + '-s' + num);
+  if (el) {
+    el.classList.add('open');
+    setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'start' }), 150);
+  }
+}
+
+function lb(tile) {
+  document.getElementById('lb-img').src = tile.querySelector('img').src;
+  document.getElementById('lb').classList.add('on');
+}
+
+function closeLb() {
+  document.getElementById('lb').classList.remove('on');
+}
+
+function toggleMobile() {
+  document.getElementById('sidebar').classList.toggle('mob-open');
+}
+</script>
+</body>
+</html>
