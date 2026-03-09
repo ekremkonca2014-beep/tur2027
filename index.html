@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ege Antik Kentleri — Tur Rehberi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --sand: #F5EDD6;
+    --sand-dark: #E8D9B8;
+    --terra: #8B3A2A;
+    --terra-dark: #5C2318;
+    --stone: #6B6259;
+    --stone-light: #9C9088;
+    --marble: #F0EBE1;
+    --deep: #1A1410;
+    --ink: #2C2418;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--sand);
+    font-family: 'Crimson Pro', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(to bottom, rgba(26,20,16,0.97), rgba(26,20,16,0));
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(4px);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; letter-spacing: 0.2em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; letter-spacing: 0.18em;
+    color: var(--stone-light); text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    height: 100vh; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(139,58,42,0.18) 0%, transparent 50%),
+      linear-gradient(160deg, #0D0A08 0%, #1E1510 40%, #231913 100%);
+  }
+  .hero-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0.22;
+    filter: sepia(60%) contrast(1.1);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(13,10,8,0.3) 0%, rgba(13,10,8,0.1) 50%, rgba(13,10,8,0.9) 100%);
+  }
+  .hero-content {
+    position: relative; text-align: center;
+    animation: fadeUp 1.4s ease both;
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem; letter-spacing: 0.4em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block;
+    width: 40px; height: 1px;
+    background: var(--gold); opacity: 0.6;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900; line-height: 0.95;
+    color: var(--marble);
+    text-shadow: 0 2px 40px rgba(201,168,76,0.2);
+    margin-bottom: 0.3em;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 1.35rem; font-weight: 300; font-style: italic;
+    color: var(--sand-dark); letter-spacing: 0.04em;
+    margin-bottom: 3rem;
+  }
+  .hero-scroll {
+    display: inline-flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    font-family: 'Cinzel', serif; font-size: 0.65rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--stone-light); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .hero-scroll:hover { color: var(--gold); }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--stone-light), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ─── TOUR CARDS ─── */
+  .section-header {
+    text-align: center; padding: 6rem 2rem 3rem;
+  }
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem; letter-spacing: 0.4em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1rem; display: block;
+  }
+  .section-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--marble); font-weight: 400;
+  }
+  .section-header h2 em {
+    font-style: italic; color: var(--gold-light);
+  }
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1.5rem auto;
+  }
+  .section-header p {
+    font-size: 1.1rem; color: var(--stone-light);
+    max-width: 550px; margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .tours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2px; margin: 0 0 0px;
+  }
+
+  .tour-card {
+    position: relative; overflow: hidden;
+    cursor: pointer; height: 520px;
+    transition: transform 0.4s ease;
+  }
+  .tour-card:hover { transform: scale(1.01); z-index: 2; }
+
+  .tour-card-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s ease, filter 0.5s ease;
+    filter: sepia(30%) contrast(1.05) brightness(0.75);
+  }
+  .tour-card:hover .tour-card-img {
+    transform: scale(1.06);
+    filter: sepia(10%) contrast(1.1) brightness(0.85);
+  }
+
+  .tour-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top,
+      rgba(13,10,8,0.95) 0%,
+      rgba(13,10,8,0.5) 40%,
+      rgba(13,10,8,0.1) 100%);
+    transition: background 0.4s;
+  }
+  .tour-card:hover .tour-card-overlay {
+    background: linear-gradient(to top,
+      rgba(13,10,8,0.98) 0%,
+      rgba(13,10,8,0.6) 40%,
+      rgba(13,10,8,0.2) 100%);
+  }
+
+  .tour-card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2.5rem 2rem;
+  }
+  .tour-badge {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem; letter-spacing: 0.35em;
+    color: var(--gold); border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.3em 0.8em; margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+  .tour-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.9rem; font-weight: 700;
+    color: var(--marble); line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+  .tour-card .tour-sub {
+    font-style: italic; font-size: 1rem;
+    color: var(--gold-light); margin-bottom: 0.8rem;
+  }
+  .tour-desc {
+    font-size: 0.95rem; color: var(--stone-light);
+    line-height: 1.6; max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .tour-card:hover .tour-desc { max-height: 120px; }
+
+  .tour-meta {
+    display: flex; gap: 1.5rem; margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    color: var(--stone-light);
+  }
+  .tour-meta span::before {
+    color: var(--gold); margin-right: 0.4em;
+  }
+  .tour-meta .dur::before { content: '◷'; }
+  .tour-meta .dist::before { content: '◈'; }
+
+  /* ─── DETAIL SECTIONS ─── */
+  .tour-detail {
+    max-width: 1100px; margin: 0 auto;
+    padding: 6rem 2rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .tour-detail-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start;
+    margin-bottom: 4rem;
+  }
+  .tour-detail-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900; color: var(--marble);
+    line-height: 1.05;
+  }
+  .tour-detail-header h2 small {
+    display: block; font-size: 0.45em;
+    font-weight: 400; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  .tour-detail-header .intro {
+    font-size: 1.1rem; line-height: 1.8;
+    color: var(--sand-dark);
+  }
+  .tour-detail-header .intro strong {
+    color: var(--gold-light); font-weight: 600;
+  }
+
+  .photo-mosaic {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 240px 240px;
+    gap: 4px; margin-bottom: 4rem;
+    border-radius: 2px; overflow: hidden;
+  }
+  .photo-mosaic img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: sepia(20%) contrast(1.05);
+    transition: filter 0.4s, transform 0.4s;
+  }
+  .photo-mosaic img:hover {
+    filter: sepia(0%) contrast(1.1);
+    transform: scale(1.03);
+  }
+  .photo-mosaic .big { grid-row: span 2; }
+
+  .route-section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; letter-spacing: 0.2em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .route-section h3::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(201,168,76,0.2);
+  }
+
+  .route-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0;
+  }
+  .route-item {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.06);
+    transition: background 0.2s;
+  }
+  .route-item:hover { background: rgba(201,168,76,0.04); }
+  .route-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; color: var(--gold);
+    min-width: 1.8em; opacity: 0.7;
+  }
+  .route-name { font-size: 0.95rem; color: var(--sand); flex: 1; }
+  .route-time {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; color: var(--stone-light);
+    white-space: nowrap;
+  }
+
+  .info-box {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    padding: 1.5rem 2rem; margin-top: 2rem;
+    border-radius: 0 2px 2px 0;
+  }
+  .info-box h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; letter-spacing: 0.25em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .info-box p {
+    font-size: 0.95rem; line-height: 1.7;
+    color: var(--sand-dark);
+    font-style: italic;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem; color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  footer p {
+    font-size: 0.9rem; color: var(--stone-light);
+    font-style: italic;
+  }
+  .footer-ornament {
+    font-size: 1.5rem; color: var(--gold);
+    opacity: 0.4; margin: 1rem 0;
+    letter-spacing: 1rem;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .tour-detail-header { grid-template-columns: 1fr; gap: 2rem; }
+    .photo-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .photo-mosaic .big { grid-row: span 1; }
+    .tours-grid { grid-template-columns: 1fr; }
+    .tour-card { height: 400px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">EGE ANTİK KENTLERİ</a>
+  <ul class="nav-links">
+    <li><a href="#efes">Efes</a></li>
+    <li><a href="#bergama">Bergama</a></li>
+    <li><a href="#pmd">Priene · Milet · Didim</a></li>
+    <li><a href="#pamukkale">Pamukkale</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <img class="hero-img"
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Library_of_Celsus_in_Ephesus.jpg/1280px-Library_of_Celsus_in_Ephesus.jpg"
+    alt="Efes Celsus Kütüphanesi">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Kapsamlı Tur Rehberi</div>
+    <h1>EGE'NİN<br><span>ANTİK</span><br>KENTLERİ</h1>
+    <p class="hero-sub">Efes · Bergama · Priene · Milet · Didim · Pamukkale</p>
+    <a class="hero-scroll" href="#turlar">
+      <span>KEŞFEDİN</span>
+      <div class="scroll-line"></div>
+    </a>
+  </div>
+</section>
+
+<!-- TOUR OVERVIEW -->
+<div class="section-header" id="turlar">
+  <span class="section-tag">Tur Rotaları</span>
+  <h2>Antik Çağın <em>Büyük Şehirleri</em></h2>
+  <div class="divider"></div>
+  <p>Anadolu'nun en önemli dört arkeolojik bölgesini profesyonel tur rehberleri eşliğinde keşfedin.</p>
+</div>
+
+<div class="tours-grid">
+
+  <!-- EFES -->
+  <div class="tour-card" onclick="document.getElementById('efes').scrollIntoView({behavior:'smooth'})">
+    <img class="tour-card-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Library_of_Celsus_in_Ephesus.jpg/1280px-Library_of_Celsus_in_Ephesus.jpg"
+      alt="Efes">
+    <div class="tour-card-overlay"></div>
+    <div class="tour-card-content">
+      <div class="tour-badge">İzmir — Selçuk</div>
+      <h3>EFES</h3>
+      <div class="tour-sub">Celsus Kütüphanesi & Büyük Tiyatro</div>
+      <div class="tour-desc">Roma'nın İtalya dışındaki en büyük şehirlerinden biri. MS 1. yüzyılda 200.000–250.000 nüfusuyla çağının metropolü.</div>
+      <div class="tour-meta">
+        <span class="dur">3 – 3.5 Saat</span>
+        <span class="dist">~3 km Yürüyüş</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BERGAMA -->
+  <div class="tour-card" onclick="document.getElementById('bergama').scrollIntoView({behavior:'smooth'})">
+    <img class="tour-card-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Bergama_20061029_001.jpg/1280px-Bergama_20061029_001.jpg"
+      alt="Bergama">
+    <div class="tour-card-overlay"></div>
+    <div class="tour-card-content">
+      <div class="tour-badge">İzmir — Bergama</div>
+      <h3>BERGAMA</h3>
+      <div class="tour-sub">Hellenistik Dünyanın İkinci Başkenti</div>
+      <div class="tour-desc">Filetairos'un kurduğu Attalid krallığının başkenti. Akropol, Asklepion ve Kızıl Avlu'yu barındıran antik şehir.</div>
+      <div class="tour-meta">
+        <span class="dur">5 – 6 Saat</span>
+        <span class="dist">~5–6 km Yürüyüş</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIENE MİLET DİDİM -->
+  <div class="tour-card" onclick="document.getElementById('pmd').scrollIntoView({behavior:'smooth'})">
+    <img class="tour-card-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Didyma-apollotempel03.jpg/1280px-Didyma-apollotempel03.jpg"
+      alt="Didim Apollon Tapınağı">
+    <div class="tour-card-overlay"></div>
+    <div class="tour-card-content">
+      <div class="tour-badge">Aydın — Muğla</div>
+      <h3>PRİENE<br>MİLET · DİDİM</h3>
+      <div class="tour-sub">Demokrasi, Felsefe ve Apollon</div>
+      <div class="tour-desc">Ege'nin üç büyük antik kenti: Hippodamik ızgaranın şehri Priene, felsefenin beşiği Milet ve kehanet merkezi Didim.</div>
+      <div class="tour-meta">
+        <span class="dur">~4.5 Saat</span>
+        <span class="dist">3 Ayrı Kent</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAMUKKALE -->
+  <div class="tour-card" onclick="document.getElementById('pamukkale').scrollIntoView({behavior:'smooth'})">
+    <img class="tour-card-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Pamukkale_2.jpg/1280px-Pamukkale_2.jpg"
+      alt="Pamukkale">
+    <div class="tour-card-overlay"></div>
+    <div class="tour-card-content">
+      <div class="tour-badge">Denizli — Pamukkale</div>
+      <h3>PAMUKKALE</h3>
+      <div class="tour-sub">Beyaz Travertenler & Hierapolis</div>
+      <div class="tour-desc">Binlerce yıllık kireçtaşı birikiminin oluşturduğu basamaklı havuzlar ve antik şifa kenti Hierapolis'in buluşma noktası.</div>
+      <div class="tour-meta">
+        <span class="dur">4 – 4.5 Saat</span>
+        <span class="dist">~3–4 km Yürüyüş</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ EFES DETAY ═══ -->
+<section class="tour-detail" id="efes">
+  <div class="tour-detail-header">
+    <h2><small>Üst Kapıdan Tiyatroya</small>EFES<br>ANTİK KENTİ</h2>
+    <div class="intro">
+      MS 1. yüzyılda <strong>200.000–250.000 nüfusuyla</strong> Roma'nın İtalya dışındaki en büyük şehri olan Efes, bugün denizden yaklaşık 8 km içeridedir. Liman alüvyonla dolunca şehir geriledi — antik dünyanın en çarpıcı "Detroit"i. <br><br>
+      Tur üst kapıdan başlar, Celsus Kütüphanesi ve Büyük Tiyatro ile son bulur. <em>Toplam süre: 3–3.5 saat.</em>
+    </div>
+  </div>
+
+  <div class="photo-mosaic">
+    <img class="big"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Library_of_Celsus_in_Ephesus.jpg/1280px-Library_of_Celsus_in_Ephesus.jpg"
+      alt="Celsus Kütüphanesi">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ephesus_Hadrians_temple_artlibre_jnl.jpg/640px-Ephesus_Hadrians_temple_artlibre_jnl.jpg"
+      alt="Hadrian Tapınağı">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Efes_-_Sütun_başlıkları.jpg/640px-Efes_-_Sütun_başlıkları.jpg"
+      alt="Sütun Başlıkları">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Ephesus_Theatre%2C_Turkey.jpg/640px-Ephesus_Theatre%2C_Turkey.jpg"
+      alt="Büyük Tiyatro">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Temple_of_Domitian_%28Ephesus%29.jpg/640px-Temple_of_Domitian_%28Ephesus%29.jpg"
+      alt="Domitianus Tapınağı">
+  </div>
+
+  <div class="route-section">
+    <h3>Tur Rotası</h3>
+    <div class="route-list">
+      <div class="route-item"><span class="route-num">01</span><span class="route-name">Üst Kapı & Oryantasyon</span><span class="route-time">5–10 dk</span></div>
+      <div class="route-item"><span class="route-num">02</span><span class="route-name">Gymnasium (Üç Kapılı Hamam)</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">03</span><span class="route-name">Devlet Agorası</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">04</span><span class="route-name">Bouleuterion (Parlamento)</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">05</span><span class="route-name">Prytaneion (Belediye Binası)</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">06</span><span class="route-name">Domitianus Tapınağı</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">07</span><span class="route-name">Memmius Anıtı</span><span class="route-time">5 dk</span></div>
+      <div class="route-item"><span class="route-num">08</span><span class="route-name">Nike Kabartması</span><span class="route-time">5 dk</span></div>
+      <div class="route-item"><span class="route-num">09</span><span class="route-name">Herkül Kapısı</span><span class="route-time">5 dk</span></div>
+      <div class="route-item"><span class="route-num">10</span><span class="route-name">Kuretenler Caddesi</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">11</span><span class="route-name">Trajan Çeşmesi</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">12</span><span class="route-name">Hadrian Tapınağı & Çeşmesi</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">13</span><span class="route-name">Terasevler (ek bilet)</span><span class="route-time">20–30 dk</span></div>
+      <div class="route-item"><span class="route-num">14</span><span class="route-name">Celsus Kütüphanesi</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">15</span><span class="route-name">Ticari Agora</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">16</span><span class="route-name">Büyük Tiyatro</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">17</span><span class="route-name">Liman Caddesi</span><span class="route-time">10 dk</span></div>
+    </div>
+    <div class="info-box">
+      <h4>Rehber Notu</h4>
+      <p>Gruba ilk olarak dört kuruluş unsurunu sorun: su, tarım, savunma, ticaret. Limanın nerede olduğunu ve bugün nereye dönüştüğünü gösterin — pamuk tarlalarına işaret edin.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BERGAMA DETAY ═══ -->
+<section class="tour-detail" id="bergama">
+  <div class="tour-detail-header">
+    <h2><small>Hellenistik Dünyanın Başkenti</small>BERGAMA<br>PERGAMUM</h2>
+    <div class="intro">
+      MÖ 282'de bir <strong>hazine bekçisinin hamlesiyle</strong> kurulan Attalid krallığı, 150 yıl içinde Anadolu'nun en önemli şehrine dönüştü. <em>Savaşmak yerine ittifak kur, yıkmak yerine inşa et.</em><br><br>
+      Üç ayrı alanda tur: <strong>Akropol</strong>, <strong>Orta Kent</strong> ve <strong>Asklepion</strong>. Toplam süre: 5–6 saat.
+    </div>
+  </div>
+
+  <div class="photo-mosaic">
+    <img class="big"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Bergama_20061029_001.jpg/1280px-Bergama_20061029_001.jpg"
+      alt="Bergama Akropol">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Pergamon_museum_berlin_2007051.jpg/640px-Pergamon_museum_berlin_2007051.jpg"
+      alt="Pergamon Altar">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Kizil_avlu_bergama.jpg/640px-Kizil_avlu_bergama.jpg"
+      alt="Kızıl Avlu">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Asklepion_in_Bergama.JPG/640px-Asklepion_in_Bergama.JPG"
+      alt="Asklepion">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Bergama_Tiyatro.jpg/640px-Bergama_Tiyatro.jpg"
+      alt="Bergama Tiyatrosu">
+  </div>
+
+  <div class="route-section">
+    <h3>Tur Rotası</h3>
+    <div class="route-list">
+      <div class="route-item"><span class="route-num">01</span><span class="route-name">Akropol — Giriş & Oryantasyon</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">02</span><span class="route-name">Zeus Sunağı Temeli</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">03</span><span class="route-name">Athena Tapınağı & Kütüphane</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">04</span><span class="route-name">Traianus Tapınağı</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">05</span><span class="route-name">Akropol Tiyatrosu</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">06</span><span class="route-name">Agora & Dionysos Tapınağı</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">07</span><span class="route-name">Orta Kent — Roma Agorası & Hamam</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">08</span><span class="route-name">Kızıl Avlu (Serapis Tapınağı)</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">09</span><span class="route-name">Bergama Arkeoloji Müzesi</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">10</span><span class="route-name">Asklepion — Kutsal Yol & Giriş</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">11</span><span class="route-name">Asklepion Tiyatrosu & Kütüphanesi</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">12</span><span class="route-name">Tedavi Kompleksi & Kutsal Pınar</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">13</span><span class="route-name">Tünel & İnkübasyon Odaları</span><span class="route-time">15 dk</span></div>
+    </div>
+    <div class="info-box">
+      <h4>Rehber Notu</h4>
+      <p>"Bu krallık bir savaş zaferiyle değil, akıllı bir hazine bekçisinin hamlesiyle kuruldu." — Son vasiyet detayını anlatın: III. Attalos tüm krallığını Roma'ya bağışladı — savaş olmadan, tek bir ok atmadan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRİENE MİLET DİDİM DETAY ═══ -->
+<section class="tour-detail" id="pmd">
+  <div class="tour-detail-header">
+    <h2><small>Ege'nin Üç Büyük Antik Kenti</small>PRİENE · MİLET<br>DİDİM</h2>
+    <div class="intro">
+      Tek günde üç antik kent: <strong>Priene</strong> Hippodamik ızgaranın saf örneği, <strong>Milet</strong> felsefenin doğduğu şehir, <strong>Didim</strong> ise Apollon'un kehanet merkezi.<br><br>
+      Her biri birbirini tamamlar. <em>Sıralama önemlidir: önce Priene, ardından Milet, son olarak Didim.</em>
+    </div>
+  </div>
+
+  <div class="photo-mosaic">
+    <img class="big"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Didyma-apollotempel03.jpg/1280px-Didyma-apollotempel03.jpg"
+      alt="Didim Apollon Tapınağı">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Priene_bouleuterion.jpg/640px-Priene_bouleuterion.jpg"
+      alt="Priene Bouleuterion">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Miletus_theatre_exterior.jpg/640px-Miletus_theatre_exterior.jpg"
+      alt="Milet Tiyatrosu">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Temple_Athena_Priene_Anatolie.jpg/640px-Temple_Athena_Priene_Anatolie.jpg"
+      alt="Priene Athena Tapınağı">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Miletus_-_Roman_Baths_-_panoramio.jpg/640px-Miletus_-_Roman_Baths_-_panoramio.jpg"
+      alt="Milet Hamamları">
+  </div>
+
+  <div class="route-section">
+    <h3>Priene Rotası</h3>
+    <div class="route-list">
+      <div class="route-item"><span class="route-num">P1</span><span class="route-name">Giriş & Oryantasyon — Hippodamos'un Şehri</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">P2</span><span class="route-name">Batı Kapısı & Surlar</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">P3</span><span class="route-name">Athena Tapınağı</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">P4</span><span class="route-name">Bouleuterion (Meclis Binası)</span><span class="route-time">15 dk</span></div>
+    </div>
+
+    <h3 style="margin-top:2rem">Milet & Didim Rotası</h3>
+    <div class="route-list">
+      <div class="route-item"><span class="route-num">M1</span><span class="route-name">Milet Büyük Tiyatrosu</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">M2</span><span class="route-name">Milet Agorası & Hamamları</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">M3</span><span class="route-name">Milet Müzesi</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">D1</span><span class="route-name">Apollon Tapınağı — İlk Bakış</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">D2</span><span class="route-name">İç Avlu & Adyton</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">D3</span><span class="route-name">Kehanet Odası & Tünel</span><span class="route-time">15 dk</span></div>
+    </div>
+
+    <div class="info-box">
+      <h4>İlginç Detay</h4>
+      <p>Büyük İskender Priene'yi ziyaret etti ve Athena Tapınağı'nın yapımına bağışta bulundu. Kapı sövesineki yazıt bugün British Museum'dadır. Milet'te Tales, Anaksimandros ve Anaksimenes düşüncenin temellerini attı.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PAMUKKALE DETAY ═══ -->
+<section class="tour-detail" id="pamukkale">
+  <div class="tour-detail-header">
+    <h2><small>Beyaz Travertenler & Antik Şifa Kenti</small>PAMUKKALE<br>HİERAPOLİS</h2>
+    <div class="intro">
+      "Pamuk Kalesi" anlamına gelen Pamukkale, <strong>binlerce yıllık kalsiyum birikiminin</strong> mucizesi. 35–57°C'deki termal sular yüzeye çıktıkça soğuyarak bembeyaz teraslar oluşturur.<br><br>
+      Kuzey kapısından başlayan tur Hierapolis antik kentini gezerek beyaz teraslara iner. <em>Toplam süre: 4–4.5 saat.</em>
+    </div>
+  </div>
+
+  <div class="photo-mosaic">
+    <img class="big"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Pamukkale_2.jpg/1280px-Pamukkale_2.jpg"
+      alt="Pamukkale Travertenler">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Hierapolis_theatre.jpg/640px-Hierapolis_theatre.jpg"
+      alt="Hierapolis Tiyatrosu">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Hierapolis_Necropolis_1.jpg/640px-Hierapolis_Necropolis_1.jpg"
+      alt="Hierapolis Nekropol">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Pamukkale_pools.jpg/640px-Pamukkale_pools.jpg"
+      alt="Antik Havuz">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Pamukkale_-_panoramio_%2810%29.jpg/640px-Pamukkale_-_panoramio_%2810%29.jpg"
+      alt="Pamukkale Panorama">
+  </div>
+
+  <div class="route-section">
+    <h3>Tur Rotası</h3>
+    <div class="route-list">
+      <div class="route-item"><span class="route-num">01</span><span class="route-name">Kuzey Kapısı Girişi & Oryantasyon</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">02</span><span class="route-name">Nekropol (Antik Mezarlık)</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">03</span><span class="route-name">Kuzey Hamamı & Bizans Kapısı</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">04</span><span class="route-name">Merkez Caddesi (Plateia)</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">05</span><span class="route-name">Apollon Tapınağı & Plutonion</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">06</span><span class="route-name">Hierapolis Arkeoloji Müzesi</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">07</span><span class="route-name">Büyük Tiyatro</span><span class="route-time">15 dk</span></div>
+      <div class="route-item"><span class="route-num">08</span><span class="route-name">Nymphaeum & Agora</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">09</span><span class="route-name">Güney Hamamı & Bizans Kilisesi</span><span class="route-time">10 dk</span></div>
+      <div class="route-item"><span class="route-num">10</span><span class="route-name">Travertenlere İniş — Beyaz Teraslar</span><span class="route-time">30–45 dk</span></div>
+      <div class="route-item"><span class="route-num">11</span><span class="route-name">Antik Havuz (Kleopatra Havuzu)</span><span class="route-time">20 dk</span></div>
+      <div class="route-item"><span class="route-num">12</span><span class="route-name">Pamukkale Köyü & Çıkış</span><span class="route-time">10 dk</span></div>
+    </div>
+    <div class="info-box">
+      <h4>İlginç Detay</h4>
+      <p>Travertenler canlıdır: her gün yeni kireçtaşı çökelir. Ancak 20. yüzyılda yapılan oteller ve aşırı turizm bu oluşumu ciddi ölçüde yavaşlattı. "Beyaz rengin mermer değil, kireçtaşı birikimi olduğunu" vurgulayın — doğal bir kimya deneyi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">☽ EGE ANTİK KENTLERİ ☽</div>
+  <div class="footer-ornament">· · · · ·</div>
+  <p>Efes · Bergama · Priene · Milet · Didim · Pamukkale</p>
+  <p style="margin-top:0.5rem; font-size:0.8rem; opacity:0.5;">Kapsamlı Tur Rehberi — Tüm Hakları Saklıdır</p>
+</footer>
+
+</body>
+</html>
